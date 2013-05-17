@@ -1,0 +1,79 @@
+[[
+library('dynamic_global.np');
+library('dynamic_results.np'); // For the stylesheet
+]]
+<%
+library('local.np'); // Import local common functions library
+library('local-strings.np'); // Import text strings library
+library('local-home.np'); // Import UI widget functions library
+
+// Shorter variable names for readability
+var	$com = Local.common,
+	$hom = Local.home,
+	$str = Local.strings;
+
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/screen.css" media="screen, projection" />
+<!-- [if lt IE 8]>
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/ie.css" media="screen, projection" />
+<![endif]-->	
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/Zing-layout.css" />
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/[[= encodeURI(Results.stylesheet) ]]" />
+<title>
+[[= Global.title ]]
+</title>
+</head>
+
+<body>
+<div id="page" class="container">
+<div id="header" class="span-24">
+<div id="logos" class="span-5">
+<a href="[[= Global.logoLink ]]"><img src="[[= encodeURI(Global.siteRoot) ]]/media/[[= Global.logo ]]" alt="NetPublish Logo" width="159" height="73" id="logo" /></a>
+</div>
+<div class="span-16 last">
+<!-- Header HTML -->
+[[= Global.header ]]
+</div>
+
+<ul id="navBar" class="span-24 clear">
+<li><%= $str.navbar.Home %></li>
+<li><a href="<%= $com.showAllURI($hom.siteName, $hom.catalogAlias, 'results.np', $hom.sortField, true) %>"><%= $str.navbar.Browse %></a></li>
+<li><a href="<%= $com.showCollectionURI($hom.siteName, $hom.catalogAlias, 'collection.np', '', $hom.sortField) %>"><%= $str.navbar.Favorites %></a></li>
+</ul>
+</div>
+
+<div id="body">
+<div id="searchFrame" class="span-5">
+<iframe frameborder="0" id="search" class="span-5" src="/netpub/server.np?base&amp;site=[[= encodeURI(Global.folder) ]]&amp;searchCatalog=catalog&amp;template=search.np" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+</div>
+
+<div id="content" class="span-19 last">
+<div id="contentHeader">
+<h1>Welcome</h1>
+[[ if (Global.welcome.length > 0) { ]]
+[[= Global.welcome ]]
+[[ } else { ]]
+<p><%= $str.info.WelcomeText %></p>
+[[ } ]]
+</div>
+</div>
+</div>
+
+<div id="footer" class="span-24">
+<div id="footerText" class="span-24">
+<!-- Footer HTML -->
+[[= Global.footer ]]
+</div>
+</div>
+</div>
+<!-- Loading script files last -->
+<script type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/json2.js"></script>
+<script type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/lawnchair-0.6.1.js"></script>
+<script type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/client.js"></script>
+</body>
+</html>

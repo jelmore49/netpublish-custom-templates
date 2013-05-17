@@ -1,0 +1,36 @@
+/* Color rules */
+#searchForms div, .collectionRecord, .resultsRecord, .collectionThumbRecord, .resultsThumbRecord {
+border-color: #666666;
+}
+
+a:visited, a:link {
+color: #666666;
+}
+
+h1, h2 {
+color: #666666;
+}
+
+#navBar, #footer {
+background-color: white;
+}
+
+hr {
+background-color: #ff9900;
+}
+
+h1:first-line, h2:first-line {
+color: #ff9900;
+}
+
+.links a:visited, .links a:link, .detailLinks a:visited, .detailLinks a:link {
+color: #ff9900;
+}
+
+#navBar li, #navBar a:visited, #navBar a:link {
+color: #666666;
+}
+
+#navBar a:hover {
+color: #ff9900;
+}

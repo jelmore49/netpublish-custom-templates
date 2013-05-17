@@ -1,0 +1,159 @@
+[[
+library('dynamic_global.np');
+library('dynamic_collection.np');
+]]
+var Local;
+
+Local.collection = {
+siteName: '[[= encodeURI(Global.folder) ]]',
+catalogAlias: Request.getParameter('catalog'),
+sortField: '[[= Collection.sortFieldName ]]' || 'Filename',
+
+/* Page-specific functions */
+displayClearAllLink: function () {
+return (
+'&nbsp; | &nbsp;' + 
+'<a href="' + Local.common.clearCollectionURI(Local.collection.siteName, Local.collection.catalogAlias, 'collection.np', '') + '">' +
+Local.strings.ui.ClearAll + '</a>');
+},
+
+displayDownloadLink: function () {
+return ('<a href="' + Local.common.downloadCollectionURI(Local.collection.siteName, Local.collection.catalogAlias, 'collection.np', '', 'Collection.zip') + '">' +
+Local.strings.ui.DownloadCollection + '</a>');
+},
+
+buildRecords: function () {
+
+var recordCounter = 0, fieldValueArray = [],
+fieldValue, recordTemplate, totalTemplate = '';
+
+do {
+RecordSet.itemNext();
+
+recordTemplate = (
+'<div class="collectionRecord span-14">' +
+'<div class="thumbnailDiv span-4">' +
+[[ switch (Collection.clickAction) {
+case 'original': ]]
+'<a href="' + RecordSet.record.original + '">' + // OnClickAction block
+'<img src="' + Local.common.thumbnailURI(Local.collection.siteName, Local.collection.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Collection.thumbnailSize ]] + '" />' + // ImageSize block
+'</a>' +
+[[ break;
+case 'download': ]]
+'<a href="' + RecordSet.record.original + '&amp;download">' + // OnClickAction block
+'<img src="' + Local.common.thumbnailURI(Local.collection.siteName, Local.collection.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Collection.thumbnailSize ]] + '" />' + // ImageSize block
+'</a>' +
+[[ break;
+case 'detail': ]]
+'<a href="' + Local.common.detailsURI(Local.collection.siteName, Local.collection.catalogAlias, 'detail.np', RecordSet.record.itemID) + '">' + // OnClickAction block
+'<img src="' + Local.common.thumbnailURI(Local.collection.siteName, Local.collection.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Collection.thumbnailSize ]] + '" />' + // ImageSize block
+'</a>' +
+[[ break; // "Do nothing" is the default
+default: ]]
+'<img src="' + Local.common.thumbnailURI(Local.collection.siteName, Local.collection.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Collection.thumbnailSize ]] + '" />' + // ImageSize block
+[[ } ]]
+'</div>' +
+'<div class="fields span-10 last">' +
+'<p>' +
+'<a href="' + Local.common.detailsURI(Local.collection.siteName, Local.collection.catalogAlias, 'detail.np', RecordSet.record.itemID) + '">' + RecordSet.record.get('File Description') + '</a>' +
+'</p>'
+);
+
+recordTemplate += '<ul>';
+[[
+if (Collection.displayFields) {
+for (x = 0; x < Collection.displayFields.length; x += 1) {
+Template.write("fieldValue = RecordSet.record.get('" + JSEscapeForSingleQuotes(Collection.displayFields[x], 2) + "', -1, 0);\n");
+Template.write('if (fieldValue != "" && fieldValue != "[undefined]") {\n');
+if (Collection.displayFields[x] === 'Keywords') {
+Template.write("fieldValue = fieldValue.toString().replace(/,/g, ', ');  // put a space after the comma\n");
+}
+Template.write("recordTemplate += '<li>" + Collection.displayFields[x] + ": ' + htmlEncode(LocalizeFieldValue(fieldValue)) + '</li>';\n");
+Template.write("}\n");
+}
+}
+]]
+recordTemplate += (
+'</ul>' +
+'</div>' +
+'<div class="links span-7 prepend-7 last clear">'
+);
+recordTemplate += Local.widget.displayAddRemoveLink(Local.collection.siteName, Local.collection.catalogAlias, RecordSet.record.itemID, 'collection.np', '', CollectionSet.get().getItemIDAll()); // Show Download link
+[[ if (Collection.downloadOriginal) { ]]
+recordTemplate += (
+' &nbsp; | &nbsp; ' +
+'<a href="' + Local.common.downloadURI(Local.collection.siteName, Local.collection.catalogAlias, RecordSet.record.itemID) +
+'">' + Local.strings.button.DownloadOriginal + '</a>');
+[[ } ]]
+
+recordTemplate += (
+' &nbsp; | &nbsp; ' +
+'<a href="' + Local.common.detailsURI(Local.collection.siteName, Local.collection.catalogAlias, 'detail.np', RecordSet.record.itemID) +
+'">' + Local.strings.button.MoreInfo + '&nbsp;›</a>' +
+'</div>' +
+'</div>'
+);
+
+recordCounter +=1;
+totalTemplate += recordTemplate;
+} while (RecordSet.hasMore() && (recordCounter < Page.itemsPerPage)); 
+
+return totalTemplate;
+},
+
+buildThumbRecords: function () {
+var colBreak = false, recordCounter = 0, fieldValue, recordTemplate, totalTemplate = '';
+
+do {
+RecordSet.itemNext();
+
+colBreak = !!(recordCounter %  [[= (Collection.cols > 4 ? 4 : Collection.cols) ]] === 0) ? true : false;
+
+recordTemplate = colBreak ? '<div class="collectionThumbRecord span-4 clear">' : '<div class="collectionThumbRecord span-4">';
+
+recordTemplate += (
+'<div class="thumbnailDiv span-4 last">' +
+[[ switch (Collection.clickAction) {
+case 'original': ]]
+'<a href="' + RecordSet.record.original + '">' + // OnClickAction block
+'<img src="' + Local.common.thumbnailURI(Local.collection.siteName, Local.collection.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Collection.thumbnailSize ]] + '" title="' + htmlEncode(LocalizeFieldValue(RecordSet.record.get('Filename', -1, 0))) + '" />' + // ImageSize block
+'</a>' +
+[[ break;
+case 'download': ]]
+'<a href="' + RecordSet.record.original + '&amp;download">' + // OnClickAction block
+'<img src="' + Local.common.thumbnailURI(Local.collection.siteName, Local.collection.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Collection.thumbnailSize ]] + '" title="' + htmlEncode(LocalizeFieldValue(RecordSet.record.get('Filename', -1, 0))) + '" />' + // ImageSize block
+'</a>' +
+[[ break;
+case 'detail': ]]
+'<a href="' + Local.common.detailsURI(Local.collection.siteName, Local.collection.catalogAlias, 'detail.np', RecordSet.record.itemID) + '">' + // OnClickAction block
+'<img src="' + Local.common.thumbnailURI(Local.collection.siteName, Local.collection.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Collection.thumbnailSize ]] + '" title="' + htmlEncode(LocalizeFieldValue(RecordSet.record.get('Filename', -1, 0))) + '" />' + // ImageSize block
+'</a>' +
+[[ break; // "Do nothing" is the default
+default: ]]
+'<img src="' + Local.common.thumbnailURI(Local.collection.siteName, Local.collection.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Collection.thumbnailSize ]] + '" title="' + htmlEncode(LocalizeFieldValue(RecordSet.record.get('Filename', -1, 0))) + '" />' + // ImageSize block
+[[ } ]]
+'</div>');
+recordTemplate += ('<p class="detailLinks">' + Local.widget.displayAddRemoveLink(Local.collection.siteName, Local.collection.catalogAlias, RecordSet.record.itemID, 'collection.np', '', CollectionSet.get().getItemIDAll()) + ' &nbsp; | &nbsp; '); // Show Download link
+recordTemplate += (
+'<a href="' + Local.common.detailsURI(Local.collection.siteName, Local.collection.catalogAlias, 'detail.np', RecordSet.record.itemID) +
+'">' + Local.strings.button.MoreInfo + '&nbsp;›</a></p>');
+[[ if (Collection.downloadOriginal) { ]]
+recordTemplate += (
+'<p class="detailLinks"><a href="' + Local.common.downloadURI(Local.collection.siteName, Local.collection.catalogAlias, RecordSet.record.itemID) +
+'">' + Local.strings.button.DownloadOriginal + '</a></p>');
+[[ } ]]
+
+recordTemplate += colBreak ? '</div>\\n' : '</div>';
+
+recordCounter +=1;
+totalTemplate += recordTemplate;
+} while (RecordSet.hasMore() && (recordCounter < Page.itemsPerPage)); 
+
+return totalTemplate;
+},
+
+initPage: function () {
+// Setting these is required
+Page.setRowsCols([[= Collection.rows ]], [[= Collection.cols ]]);
+}
+}

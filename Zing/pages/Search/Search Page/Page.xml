@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>MajorVersion</key>
+		<integer>8</integer>
+		<key>MinorVersion</key>
+		<integer>0</integer>
+		<key>PageTemplate</key>
+		<dict>
+			<key>Image</key>
+			<string>site10_search.jpg</string>
+			<key>Caption</key>
+			<string>Search page with categories</string>
+			<key>Description</key>
+			<string>This search page contains text input boxes to search on Filename and Description fields by default. This option contains a "Browse by Category" area that displays master keywords as hyperlinks.</string>
+			<key>Search</key>
+			<!-- This should match PageType -->
+			<dict>
+				<key>SearchAllFieldsEnabled</key>
+				<true/>
+				<key>SearchAllFields</key>
+				<false/>
+				<key>ShowFindAll</key>
+				<true/>
+				<key>StyleSheet</key>
+				<string>Bravado.css</string>
+				<key>SearchFieldsEnabled</key>
+				<true/>
+				<key>SearchFields</key>
+				<array>
+					<dict>
+						<key>FieldName</key>
+						<string>Filename</string>
+						<key>selected</key>
+						<true/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array>
+							<!-- list of selected search operators -->
+							<string>Contains</string>
+						</array>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Description</string>
+						<key>selected</key>
+						<true/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array>
+							<!-- list of selected search operators -->
+							<string>Contains</string>
+						</array>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Color</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Hyperlink for pre-defined list</string>
+						<key>SelectedSearchOperators</key>
+						<array>
+							<string>Starts With</string>
+							<string>Does Not Start With</string>
+							<string>Ends With</string>
+						</array>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Alias Mac</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Cataloged</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Category</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Color Mode</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Created</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Creator Mac</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Description</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Extension Win</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>File Size</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>File Type Mac</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Height</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Keywords</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Last Modified</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Last Updated</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Number of Pages</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Originating Path</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Path</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Short Filename Win</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Thumbnail Size</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Volume</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Watermark URL</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Watermarked</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Width</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Zone Mac</string>
+						<key>selected</key>
+						<false/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array/>
+					</dict>
+				</array>
+			</dict>
+			<!-- end Search -->
+		</dict>
+		<!-- end PageTemplate -->
+	</dict>
+</plist>

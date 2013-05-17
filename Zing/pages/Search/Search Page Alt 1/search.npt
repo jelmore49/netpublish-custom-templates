@@ -1,0 +1,152 @@
+[[
+library('global_local-strings.np');
+library('dynamic_global.np');
+library('dynamic_search.np');
+library('dynamic_results.np'); // Used for 'Sort Results By'
+Search.setQuickSearch();
+
+Search.outputSearchFields = function () {
+var searchFormBuffer = '',
+listName = '',
+hasExistsOperator = false,
+onlyExistsOperator = true,
+x,y;
+
+for (x = 0; x < Search.fields.length; x += 1) {
+searchFormBuffer += '<label for="field">' + Search.fields[x].name + ' ' +
+'<input type="hidden" name="field" value="' + Search.fields[x].name + '" />\n';
+for (y = 0; y < Search.fields[x].operators.length; y += 1) { 
+if (Search.fields[x].operators[y].toLowerCase() === "exists" || Search.fields[x].operators[y].toLowerCase() === "does not exist") {
+hasExistsOperator = true;
+break;
+}
+}
+
+if (Search.fields[x].operators.length === 1 && hasExistsOperator === false) {
+// Only one option selected and it's not "exists" or "does not exist"
+searchFormBuffer += Search.fields[x].operators[0].toLowerCase() + '</label>\n' +
+'<input type="hidden" name="op" value="' + Search.fields[x].operators[0].toLowerCase() + '" />\n';
+} else {
+// Start a pulldown menu
+searchFormBuffer += '<select name="op">\n';
+if (hasExistsOperator) {
+// Write a blank selected option at the top of the list
+searchFormBuffer += '<option selected="selected"></option>\n';
+}
+
+for (y = 0; y < Search.fields[x].operators.length; y += 1) {
+if (y === 0 && hasExistsOperator === false) {
+// Select the first option in operators...
+searchFormBuffer += '<option selected="selected" value="' + Search.fields[x].operators[y].toLowerCase() + '">' + Search.fields[x].operators[y].toLowerCase() + '</option>\n';
+} else {
+// ...unless we wrote a blank option above
+searchFormBuffer += '<option value="' + Search.fields[x].operators[y].toLowerCase() + '">' + Search.fields[x].operators[y].toLowerCase() + '</option>\n';
+}
+}
+searchFormBuffer += '</select>\n';
+}
+//////////////////////////////////////////
+
+if (Search.fields[x].presentation === 0) {
+for (y = 0; y < Search.fields[x].operators.length; y += 1) {
+if (Search.fields[x].operators[x] !== "Exists" && Search.fields[x].operators[x] !== "Does Not Exist") {
+onlyExistsOperator = false;
+break;
+}
+}
+
+if (!onlyExistsOperator) {
+searchFormBuffer += '<input type="text" name="value" value="" class="span-4" />\n';
+} else {
+searchFormBuffer += '<input type="hidden" name="value" value="">\n';
+}
+
+} else {
+// Not doing hyperlinks on this template
+listName = 'preDefList';
+
+searchFormBuffer += '<select name="value">\n';
+searchFormBuffer += '<% ' + listName + " = CatalogSet.get('catalog').getType('" + JSEscapeForSingleQuotes(Search.fields[x].name, 1) + "').getPreDefinedList(); %>\n";
+searchFormBuffer += '<% if (' + listName + ' === null) {\n' + listName + " = ['HAS NO PREDEFINED LIST'];\n} else { %>\n";
+if (this.name === "Keywords" || this.name === "Color Mode") {
+searchFormBuffer += '<option></option>\n';
+}
+searchFormBuffer += '<% for (x = 0; x < ' + listName + '.length; x += 1) { %>\n';
+searchFormBuffer += '<option><%= ' + listName + '[x] %></option>\n';
+searchFormBuffer += '<% }\n} %>\n';
+searchFormBuffer += '</select>\n';
+}
+}
+
+return searchFormBuffer;
+}
+]]
+<%
+library('global.np'); // Import global common functions library
+library('local.np'); // Import local common functions library
+library('local-strings.np'); // Import text strings library
+library('local-search.np'); // Import UI widget functions library
+
+// Shorter variable names for readability
+// Shorter variable names for readability
+var	$com = Local.common,
+	$src = Local.search,
+	$str = Local.strings;
+
+$src.initPage();
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/screen.css" media="screen, projection" />
+<!-- [if lt IE 8]>
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/ie.css" media="screen, projection" />
+<![endif]-->	
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/Zing-layout.css" />
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/[[= encodeURI(Results.stylesheet) ]]" />
+<title>
+[[= Global.title ]]
+</title>
+</head>
+
+<body>
+<div id="searchForms">
+<div>
+<h2>Search<br>
+the catalog</h2>
+[[ if (Search.quickSearchCreate) { ]]
+<form id="mainSearchForm" action="/netpub/server.np?quickfind" method="post" target="_parent">
+<input type="hidden" name="catalog" value="<%= $src.catalogAlias %>" /> 
+<input type="hidden" name="site" value="<%= $src.siteName %>" /> 
+<input type="hidden" name="template" value="results.np" /> 
+<p><%= $str.ui.QuickSearch %></p>
+<input type="text" name="value" value="" class="span-4" /><br />
+<input type="hidden" name="sorton" value="[[= Results.sortFieldName ]]" />
+<input type="hidden" name="ascending" value="1" />
+<input type="submit" value="<%= $str.ui.Search %>" />
+</form>
+[[ } else { ]]	
+<form id="mainSearchForm" action="/netpub/server.np?find" method="post" target="_parent">
+<input type="hidden" name="catalog" value="<%= $src.catalogAlias %>" /> 
+<input type="hidden" name="site" value="<%= $src.siteName %>" /> 
+<input type="hidden" name="template" value="results.np" /> 
+<!-- Generated form elements begin here -->
+<p><%= $str.ui.RecordsForWhich %></p>
+[[= Search.outputSearchFields() ]]
+<!-- "Search On" form -->  
+<p><%= $str.ui.SearchOn %> <input type="radio" name="defaultjoin" value="or" checked="checked" /> <%= $str.ui.Any %> <input type="radio" name="defaultjoin" value="and" /> <%= $str.ui.All %></p>
+<input type="hidden" name="sorton" value="[[= Results.sortFieldName ]]" />
+<input type="hidden" name="ascending" value="1" />
+<input type="submit" value="<%= $str.ui.Search %>" />
+</form>
+[[ } ]]
+[[ if (Search.findAll) { ]]
+<p><a href="<%= $com.showAllURI($src.siteName, $src.catalogAlias, 'results.np', $src.sortField, false) %>" target="_parent">
+<%= $str.ui.ShowAllItems %></a></p>
+[[ } ]]
+</div>
+</div>
+</body>
+</html>

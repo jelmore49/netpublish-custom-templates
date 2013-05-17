@@ -1,0 +1,9 @@
+[[
+library('dynamic_global.np');
+]]
+var Local;
+
+Local.home = {
+	siteName: '[[= encodeURI(Global.folder) ]]',
+	catalogAlias: Request.getParameter('catalog'),
+}

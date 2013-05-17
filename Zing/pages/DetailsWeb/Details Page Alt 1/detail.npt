@@ -1,0 +1,205 @@
+[[
+library('dynamic_global.np');
+library('dynamic_detail.np');
+]]
+<%
+library('global.np'); // Import global common functions library
+library('local.np'); // Import local common functions library
+library('local-strings.np'); // Import text strings library
+library('local-widget.np'); // Import UI widget functions library
+library('local-detail.np'); // Import UI widget functions library
+
+Local.detail.initPage();
+
+// Shorter variable names for readability
+var $com = Local.common,
+$det = Local.detail,
+$str = Local.strings,
+$wid = Local.widget,
+videoDims, streamPath, thumbPath, imageElement = '', videoSource = '',
+videoType = RecordSet.record.get('Movie - Video Codec'),
+fileType = RecordSet.record.get('Extension').toLowerCase(),
+videoHeight = parseInt(RecordSet.record.get('Height'), 10),
+videoWidth = parseInt(RecordSet.record.get('Width'), 10),
+maxDim = [[= Detail.imageSize ]],
+//video formats that can be shown in the Flash Media Player
+flashVideoFormats = ['h263','avc1','mp4v','MJPEG (Motion JPEG)','Flash Video'],
+//video formats supported for previewing by Portfolio Server
+videoExtensions = ['f4v','flv','swf','mp4','mov','mpg','mpeg','wmv','asf','avi','3gp'];
+
+[[ if (Detail.imageSource === 'thumbnail') { ]]
+imageElement = '<img src="' + RecordSet.record.thumbnail.replace(/&/g, '&amp;') + '" alt="' + $str.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="[[= Detail.imageSize ]]" />';
+[[ } else if (Detail.imageSource === 'preview') { ]]
+if (videoExtensions.indexOf(fileType) !== -1) {
+	videoSource = 'preview';
+} else {
+	imageElement = '<img src="' + RecordSet.record.preview.replace(/&/g, '&amp;') + '" alt="' + $str.imagealt.Preview + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="[[= Detail.imageSize ]]" />';
+}
+[[ } else if (Detail.imageSource === 'original') { ]]
+if (videoType === 'avc1') {
+	videoSource = 'original';
+} else if (videoExtensions.indexOf(fileType) !== -1) {
+	videoSource = 'preview';
+} else {
+	imageElement = '<img src="' + RecordSet.record.original.replace(/&/g, '&amp;') + '" alt="' + $str.imagealt.Original + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="[[= Detail.imageSize ]]" />';
+}
+[[ } ]]
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/screen.css" media="screen, projection" />
+<!-- [if lt IE 8]>
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/ie.css" media="screen, projection" />
+<![endif]-->	
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/Zing-layout.css" />
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/[[= encodeURI(Detail.stylesheet) ]]" />
+<title>
+[[= Global.title ]]
+</title>
+</head>
+
+<body>
+<div id="page" class="container">
+<div id="header" class="span-24">
+<div id="logos" class="span-5">
+<a href="[[= Global.logoLink ]]"><img src="[[= encodeURI(Global.siteRoot) ]]/media/[[= Global.logo ]]" alt="<%= $str.imagealt.Logo %>" width="159" height="73" id="logo" /></a>
+</div>
+<div class="span-16 last">
+<!-- Header HTML -->
+[[= Global.header ]]
+</div>
+
+<ul id="navBar" class="span-24 clear">
+<li><a href="<%= $com.homePageURI($det.siteName, $det.catalogAlias, 'home.np') %>"><%= $str.navbar.Home %></a></li>
+<li><a href="<%= $com.showAllURI($det.siteName, $det.catalogAlias, 'results.np', $det.sortField, true) %>"><%= $str.navbar.Browse %></a></li>
+<li><a href="<%= $com.showCollectionURI($det.siteName, $det.catalogAlias, 'collection.np', '', $det.sortField) %>"><%= $str.navbar.Favorites %></a></li>
+</ul>
+</div>
+
+<div id="body">
+<div id="searchFrame" class="span-5">
+<iframe frameborder="0" id="search" class="span-5" src="/netpub/server.np?base&amp;site=[[= encodeURI(Global.folder) ]]&amp;searchCatalog=catalog&amp;template=search.np" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+</div>
+
+<div id="content" class="span-19 last">
+<div id="contentHeader">
+<h1><%= $str.section.Details %></h1>
+</div>
+<div id="detailDiv">
+<% if (imageElement !== '') { %>
+[[ switch (Detail.clickAction) {
+	case 'original': ]]
+<a href="<%= RecordSet.record.original.replace(/&/g, "&amp;") %>">
+<%= imageElement %>
+</a>
+[[ break;
+	case 'download': ]]
+<a href="<%= RecordSet.record.original.replace(/&/g, "&amp;") %>&amp;download">
+<%= imageElement %>
+</a>
+[[ break; // "Do nothing" is the default
+	default: ]]
+<%= imageElement %>
+[[ } ]]
+
+<% } else {
+	if (videoSource === 'original') {
+		streamPath = '../netpub/server.np?catalog=' + $det.catalogAlias + '&itemid=' + RecordSet.record.itemID + '&site=[[= encodeURI(Global.folder) ]]&original&stream';
+	} else {
+		streamPath = '../netpub/server.np?catalog=' + $det.catalogAlias + '&itemid=' + RecordSet.record.itemID + '&site=[[= encodeURI(Global.folder) ]]&preview&stream';
+	}
+	thumbPath = '../netpub/server.np?catalog=' + $det.catalogAlias + '&itemid=' + RecordSet.record.itemID + '&site=[[= encodeURI(Global.folder) ]]&preview&aspect&width=';
+	if (maxDim === 0) {
+		videoDims = $det.checkForResize(videoHeight, videoWidth, 0);
+		// $det.checkForResize() returns { finalHeight, finalWidth }
+		thumbPath += videoWidth;
+	} else {
+		videoDims = $det.checkForResize(videoHeight, videoWidth, maxDim);
+		thumbPath += maxDim;
+	}
+%>
+<!-- http://www.longtailvideo.com - Go here to purchase JWPlayer license -->
+<div id="videoPlayer"><%= $str.video.LoadingVideo %></div>
+<script type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/jwplayer.js"></script>
+<script type="text/javascript">
+jwplayer('videoPlayer').setup({
+	'id': 'playerID',
+	'file': '<%= streamPath %>',
+	'image': '<%= thumbPath %>',
+	'width': '<%= videoDims.finalWidth %>',
+	'height': '<%= videoDims.finalHeight %>',
+	'provider': 'http',
+	'http.startparam':'video-start',
+	'modes': [
+	{
+		type: 'flash',
+		src: '../res/sites/<%= Request.getParameter('site') %>/media/player.swf',
+		config: {'http.startparam':'video-start'}
+	},
+	{
+		type: 'html5',
+		config: {'file': '<%= streamPath %>','provider': 'video'}
+	}
+	]
+});
+</script>
+<% } %>
+<p>
+<%= RecordSet.record.get('File Description') %>
+</p>
+<p class="detailLinks">
+<a href="<%= RecordSet.record.original.replace(/&/g, "&amp;") %>">View</a>
+[[ if (Detail.collectionOptions) { ]]
+&nbsp; | &nbsp; <%= $wid.displayAddRemoveLink($det.siteName, $det.catalogAlias, RecordSet.record.itemID, 'collection.np', '', CollectionSet.get().getItemIDAll()) %>
+[[ } ]]
+[[ if (Detail.downloadOriginal) { ]]
+&nbsp; | &nbsp;
+<a href="<%= RecordSet.record.original.replace(/&/g, "&amp;") %>&amp;download">Download</a>
+[[ } ]]
+</p>
+<hr />
+<p><%= $str.ui.MoreInformation %></p>
+<ul>
+<% var fieldValue = '',
+recordTemplate = '';
+[[
+if (Detail.displayFields) {
+for (x = 0; x < Detail.displayFields.length; x += 1) {
+Template.write("fieldValue = RecordSet.record.get('" + JSEscapeForSingleQuotes(Detail.displayFields[x], 2) + "', -1, 0);\n");
+Template.write('if (fieldValue != "" && fieldValue != "[undefined]") {\n');
+if (Detail.displayFields[x] === 'Keywords') {
+Template.write("fieldValue = fieldValue.toString().replace(/,/g, ', ');  // put a space after the comma\n");
+}
+Template.write("recordTemplate += '<li><b>" + Detail.displayFields[x] + ":</b> ' + htmlEncode(LocalizeFieldValue(fieldValue)) + '</li>';\n");
+Template.write("}\n");
+}
+}
+]]
+%>
+<%= recordTemplate %>
+</ul>
+</div>
+</div>
+</div>
+<% if ($com.isMissingOriginal()) {
+	Response.write('<p>Original is missing!</p>');
+}
+if ($com.isMissingPreview()) {
+	Response.write('<p>Preview is missing!</p>');
+} %>
+<div id="footer" class="span-24">
+<div id="footerText" class="span-24">
+<!-- Footer HTML -->
+[[= Global.footer ]]
+</div>
+</div>
+</div>
+<!-- Loading script files last -->
+<script type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/json2.js"></script>
+<script type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/lawnchair-0.6.1.js"></script>
+<script type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/client.js"></script>
+</body>
+</html>

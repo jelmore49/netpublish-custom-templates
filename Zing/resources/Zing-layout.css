@@ -1,0 +1,173 @@
+/* General Rules */
+@font-face
+{
+    font-family: MuseoSans-300;
+    src: url("http://fnt.webink.com/?drawer=586CF760-B32B-40AD-BE55-91029D27CDBF&font=A5D15588-A18E-DC95-62EC-9A4E98DE136A");
+    font-weight:normal; font-style:normal; font-variant:normal;
+}
+
+@font-face {
+	font-family: DroidSans;
+	font-style: normal;
+	font-weight: normal;
+	src: local('Droid Sans'), url('DroidSans.ttf'), url('http://themes.googleusercontent.com/font?kit=POVDFY-UUf0WFR9DIMCU8g') format('truetype');
+}
+
+h1, h2, #navBar li, .links, .detailLinks {
+	font-family: MuseoSans300, DroidSans, "Helvetica Neue", Verdana, Arial, sans-serif;
+}
+
+img {
+	border: none;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+h2 {
+	margin-top: .5em;
+}
+
+ul {
+	padding-left: 10px;
+}
+
+li {
+	list-style-type: none;
+}
+
+a:visited, a:link {
+	text-decoration: underline;
+}
+
+hr {
+	width: 75%;
+}
+
+/* Context-specific rules */
+iframe#search, #searchFrame {
+	height: 594px;
+}
+
+#searchForms div {
+	margin-top: 18px;
+	width: 166x;
+	border: solid 1px;
+	-moz-border-radius: 0 10px 10px 0;
+	-webkit-border-top-left-radius: 0;
+	-webkit-border-top-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 0;
+	-webkit-border-bottom-right-radius: 10px;
+	border-radius: 0 10px 10px 0;
+	padding: 10px;
+}
+
+#searchForms p {
+	margin-bottom: 0;
+}
+
+#logo {
+	margin-left: 30px;
+}
+
+.multi {
+	padding-bottom: 36px;
+}
+#content {
+	margin-top: 18px;
+}
+
+#navBar {
+	-moz-border-radius: 0 0 10px 10px;
+	-webkit-border-top-left-radius: 0;
+	-webkit-border-top-right-radius: 0;
+	-webkit-border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	border-radius: 0 0 10px 10px;
+	min-height: 36px;
+	margin-bottom: 0;
+}
+
+#navBar li {
+	display: inline;
+	font-size: 2em;
+	margin-left: 230px;
+	text-transform: lowercase;
+}
+
+#navBar li+li {
+	margin-left: 70px;
+}
+
+#content {
+	min-height: 600px;
+}
+
+#footer {
+	-moz-border-radius: 10px 10px 0 0;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 0;
+	-webkit-border-bottom-right-radius: 0;
+	border-radius: 10px 10px 0 0;
+	min-height: 36px;
+}
+
+h2, .links, .detailLinks {
+	font-size: 125%;
+	line-height: 1;
+	text-transform: lowercase;
+}
+
+h2:first-line {
+	font-size: 150%;
+}
+
+#navBar li, #navBar a:visited, #navBar a:link, .links a, .detailLinks a {
+	text-decoration: none;
+}
+
+#logo {
+	margin-left: 30px;
+}
+
+.collectionRecord, .resultsRecord, .collectionThumbRecord, .resultsThumbRecord {
+	-moz-border-radius: 10px 0 10px 0;
+	-webkit-border-radius: 10px 10px 0 0;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 0;
+	-webkit-border-bottom-left-radius: 0;
+	-webkit-border-bottom-right-radius: 10px;
+	border-radius: 10px 0 10px 0;
+	border: solid 1px;
+	margin-bottom: 18px;
+	padding: 10px;
+}
+
+.collectionThumbRecord, .resultsThumbRecord {
+	text-align: center;
+}
+
+.collectionThumbRecord > .detailLinks, .resultsThumbRecord > .detailLinks {
+	margin-bottom: 0;
+}
+
+.thumbnailDiv {
+	text-align: center;
+	width: 126px;
+	height: 126px;
+	padding: 3px;
+}
+
+.links, #pages, #download, #searchCriteria {
+	text-align: right;
+}
+
+#records, #pages {
+	margin-bottom: 0;
+}
+
+.fields p {
+	margin-left: 10px;
+}
