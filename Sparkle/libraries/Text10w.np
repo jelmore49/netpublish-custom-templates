@@ -1,0 +1,48 @@
+﻿Text = new Text();
+
+function Text()
+{
+    this.SiteID = "Web Site 10";
+    this.Prefix = "";
+    this.Suffix = "";
+    
+    // <%= Text.Global_228_FavoritesEmpty %>
+    this.Global_4_ViewOriginal = this.Prefix + "view original image" + this.Suffix;
+    this.Global_5_NoMatches = this.Prefix + "The search returned no matches" + this.Suffix;
+    this.Global_14_Of = this.Prefix + "of" + this.Suffix;
+    this.Global_49_Next = this.Prefix + "next" + this.Suffix;
+    this.Global_50_Previous = this.Prefix + "previous" + this.Suffix;
+    this.Global_52_ViewDetails = this.Prefix + "view details" + this.Suffix;
+    this.Global_61_SearchContains = this.Prefix + "quick search contains" + this.Suffix;
+    this.Global_66_Favorites = this.Prefix + "Favorites" + this.Suffix;
+    this.Global_68_SearchResults = this.Prefix + "Search Results" + this.Suffix;
+    this.Global_69_Detail = this.Prefix + "Detail" + this.Suffix;
+    this.Global_70_Home = this.Prefix + "Home" + this.Suffix;
+    this.Global_76_DownloadImage = this.Prefix + "download image" + this.Suffix;
+    this.Global_82_MoreInfo = this.Prefix + "more info" + this.Suffix;
+    this.Global_85_Remove = this.Prefix + "remove" + this.Suffix;
+    this.Global_92_RemoveFromFavorites = this.Prefix + "remove from favorites" + this.Suffix;
+    this.Global_93_NoCriteriaEntered = this.Prefix + "No search criteria was entered" + this.Suffix;
+    this.Global_98_CertainRecords = this.Prefix + "Use the search tools to show only certain records." + this.Suffix;
+    this.Global_99_RecordsForWhich = this.Prefix + "Show records for which:" + this.Suffix;
+    this.Global_106_SearchResults = this.Prefix + "Displaying search results" + this.Suffix;
+    this.Global_107_DisplayingItems = this.Prefix + "Displaying items" + this.Suffix;
+    this.Global_108_ShowAllItems = this.Prefix + "show all items" + this.Suffix;
+    this.Global_109_MoreInformation = this.Prefix + "More information on this item:" + this.Suffix;
+    this.Global_110_ShowAll = this.Prefix + "show all" + this.Suffix;
+    this.Global_112_DisplayingFavorites = this.Prefix + "Displaying favorites" + this.Suffix;
+    this.Global_113_ClearAll = this.Prefix + "clear all" + this.Suffix;
+    this.Global_114_Go = this.Prefix + "go" + this.Suffix;
+    this.Global_115_Search = this.Prefix + "search" + this.Suffix;
+    this.Global_116_Page = this.Prefix + " Page" + this.Suffix;
+    this.Global_200_Thumbnail = this.Prefix + "thumbnail" + this.Suffix;
+    this.Global_205_NetPublishLogo = this.Prefix + "Portfolio NetPublish" + this.Suffix;
+    this.Global_206_Spacer = this.Prefix + "spacer" + this.Suffix;
+    this.Global_215_DownloadOriginal = this.Prefix + "Download original" + this.Suffix;
+    this.Global_223_Browse = this.Prefix + "browse" + this.Suffix;
+    this.Global_226_ZipFormat = this.Prefix + "zip format" + this.Suffix;
+    this.Global_227_SitFormat = this.Prefix + "sit format" + this.Suffix;
+    this.Global_228_FavoritesEmpty = this.Prefix + "Your favorites folder is empty" + this.Suffix;
+    this.Global_229_DownloadAll = this.Prefix + "Download all images:" + this.Suffix;
+
+}

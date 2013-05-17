@@ -1,0 +1,297 @@
+[[
+    library('global_strings.np');
+    library('dynamic_global.np');
+    library('dynamic_search.np');
+    library('dynamic_results.np'); // Used for 'Sort Results By'
+    
+    // Yes, we want the generator to create a quicksearch field
+    // if the user has selected it
+    Search.setQuickSearch();     
+]]
+<%
+    library('global.np');
+    library('local.np');
+    library('Text10w.np');
+    
+    catalogName = Request.getParameter('searchCatalog');
+
+    if (catalogName.length == 0)
+        catalogName = CatalogSet.getAliases()[0];
+    
+    fieldList = CatalogSet.get(catalogName).getTypeAll();
+    masterKeywordList = CatalogSet.getMasterKeywordsAll();
+    
+    // Truncate the master keyword list if it is too long
+    masterKewordCount = masterKeywordList.length;
+    if (masterKeywordList.length > 10)
+        masterKeywordList = masterKeywordList.slice(0, 10);
+        
+    newBackUrl = '/netpub/server.np?';
+    
+    arguments = Request.getParameterAll()
+    for (x = 0; x < arguments.length; x++)
+    {
+        newBackUrl += arguments[x];
+        newBackUrl += '=';
+        newBackUrl += encodeURI(Request.getParameter(arguments[x]));
+        if (x != arguments.length - 1)
+            newBackUrl += '&';
+    }
+    
+    var today = new Date();
+    var expires = new Date(today.getTime() + 28 * 24 * 60 * 60 * 1000); // plus 28 days
+    
+    Response.setCookie('PortWebSearch', newBackUrl, expires.toGMTString(), '/');            
+%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+"http://www.w3.org/TR/1998/REC-html40-19980424/loose.dtd">
+<HTML>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/[[= Search.stylesheet ]]" />
+    <script language="JavaScript" type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/client.js"></script>
+    <title>[[= Global.title ]]</title> 
+</head>
+<BODY onload="preloadImages();" class="white">
+<TABLE WIDTH="191" ID="search" NAME="search" SUMMARY="search table" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR>
+		<TD WIDTH="191">
+			<TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0" WIDTH="191" SUMMARY="search table top" ID="searchTop" NAME="searchTop">
+				<TR>
+					<TD>
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/browseTable_tl.gif" WIDTH="17" HEIGHT="61" ALT="topleft" NAME="topleft"></TD>
+					<TD>
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/browseTable_search_tm.gif" WIDTH="157" HEIGHT="61" ALT="topmid" NAME="topmid"></TD>
+					<TD>
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/browseTable_tr.gif" WIDTH="17" HEIGHT="61" ALT="topleft" NAME="topright"></TD>
+				</TR>
+			</TABLE>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="191" VALIGN="TOP">
+			<TABLE ID="search" NAME="search" SUMMARY="search" BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="191">
+				<TR>
+					<TD HEIGHT="100%" WIDTH="2" ROWSPAN="99">
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH="2" ALT="<%= Text.Global_206_Spacer %>" NAME="spacer"></TD>
+					<TD BGCOLOR="#FFCC00" HEIGHT="100%" WIDTH="1" ROWSPAN="99"></TD>
+					<TD HEIGHT="100%" WIDTH="15" ROWSPAN="99"></TD>
+					<TD STYLE="padding:2px">
+[[ if (Search.selectedFields && !Search.quickSearchCreate) { ]]
+                       
+                    
+						<P CLASS="ver11D">
+							<%= Text.Global_99_RecordsForWhich %>
+						</P>
+ [[ }  ]]
+                        
+
+					</TD>
+					<TD BGCOLOR="#FFCC00" HEIGHT="100%" WIDTH="1" ROWSPAN="99"></TD>
+					<TD HEIGHT="100%" WIDTH="3" ROWSPAN="99">
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH="3" ALT="<%= Text.Global_206_Spacer %>" NAME="spacer"></TD>
+				</TR>
+               
+				<!-------------------------------->  
+				<!-- Seperate search for fields -->  
+				<!-------------------------------->          
+				[[ if (Search.selectedFields) { ]]                        
+                
+                <!-------------------------------->
+                <!-- Need HTML form for field ? -->
+                <!-------------------------------->
+                [[ if (Search.needsForm()) { ]]
+                
+				<FORM ACTION="/netpub/server.np?[[= Search.getPostCommand() ]]" METHOD="POST" TARGET="_parent">
+					<INPUT TYPE="hidden" NAME="catalog" VALUE="<%= catalogName %>"> 
+                    <INPUT TYPE="hidden" NAME="site" VALUE="<%= Request.getParameter('site') %>"> 
+                    <INPUT TYPE="hidden" NAME="template" VALUE="results.np"> 
+                    
+                <!-------------------------------->
+                <!-- End Need HTML form         -->
+                <!-------------------------------->
+                [[ }  ]]
+
+                <!-------------------------->  
+                <!-- Start of field block -->  
+                <!-------------------------->          
+                [[ Search.processFields( ]]
+                
+
+				<TD STYLE="padding:2px">
+                <P CLASS="ver11D">
+<!---------------------------->  
+<!-- Field name             -->  
+<!---------------------------->  
+[[=  htmlEncode(Search.getFieldName())  ]] 
+<!---------------------------->  
+               
+<!------------------------------------->  
+<!-- Search operators for this field -->  
+<!------------------------------------->  
+[[  Search.outputSelectOptions(); ]]
+<!------------------------------------->  
+            
+			</TD>
+		</TR>
+		<TR>
+			<TD STYLE="padding:2px">
+            <P CLASS="ver11D">
+<!------------------------------------->  
+<!-- Input method for this field     -->  
+<!------------------------------------->  
+[[ Search.outputInputForm('target="_parent"'); ]]
+<!------------------------------------->              
+            
+			</TD>
+		</TR>
+        
+<!-------------------------->  
+<!-- End of field block   -->
+<!-------------------------->  
+[[ ); ]]
+
+          <TR>
+        	<TD style="padding:2px">
+                  <P CLASS="ver11J">
+                <!-------------------------->  
+                <!-- "Search On" form     -->  
+                <!-------------------------->          
+
+[[ if (Search.selectedFields && !Search.quickSearchCreate) { ]]
+
+
+                
+<input type="radio" name="defaultjoin" value="or">Any Field
+<input type="radio" name="defaultjoin" value="and" Checked>All Fields<br>
+
+ [[ }  ]]
+
+</TD>
+       	</TR>
+                
+		<TR>
+			<TD ALIGN="center" STYLE="padding:15px" VALIGN="middle">
+            
+                <!-------------------------------->
+                <!-- Need HTML form for field ? -->
+                <!-------------------------------->
+                [[ if (Search.needsForm()) { ]]
+
+                <input type="hidden" name="sorton" value="[[= Results.sortFieldName ]]">
+                <input type="hidden" name="ascending" value="1">
+		<input type="submit" value=" Submit "> 
+                
+                <!-------------------------------->
+                <!-- End Need HTML form         -->
+                <!-------------------------------->
+                [[ }  ]]
+			</TD>
+		</TR>
+    </FORM>
+    
+<!-------------------------------->  
+<!-- End of Seperate search     -->
+<!-------------------------------->  
+[[ } ]]
+
+    
+<!-------------------------------->  
+<!-- Find All link              -->
+<!-------------------------------->  
+[[ if (Search.findAll) { ]]
+    
+	<FORM ACTION="/netpub/server.np?quickfind" METHOD="POST" TARGET="_parent">
+		<INPUT TYPE="hidden" NAME="catalog" VALUE="<%= catalogName %>"> 
+        <input type="hidden" name="sorton" value="[[= Results.sortFieldName ]]">
+        <INPUT TYPE="hidden" NAME="site" VALUE="<%= Request.getParameter('site') %>"> 
+        <INPUT TYPE="hidden" NAME="template" VALUE="results.np"> 
+	<TR>
+		<TD ALIGN="CENTER" NOWRAP>
+			<P CLASS="ver11D">
+                <A HREF="javascript:document.forms[1].submit()">
+                    <%= Text.Global_108_ShowAllItems %></A> &nbsp; &nbsp; 
+		</TD>
+	</TR>
+    </FORM>
+<!-------------------------------->  
+<!-- End of Find All link       -->
+<!-------------------------------->  
+[[ } ]]
+    
+</TABLE>
+</TD>
+</TR>
+<TR>
+	<TD>
+		<TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0" SUMMARY="search table bottom" ID="searchBottom" NAME="searchBottom">
+			<TR>
+				<TD>
+					<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/browseTable_bl.gif" WIDTH="17" HEIGHT="23" ALT="<%= Text.Global_206_Spacer %>" NAME="spacer"></TD>
+				<TD>
+					<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/browseTable_bm.gif" WIDTH="157" HEIGHT="23" ALT="<%= Text.Global_206_Spacer %>" NAME="spacer"></TD>
+				<TD>
+					<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/browseTable_br.gif" WIDTH="17" HEIGHT="23" ALT="<%= Text.Global_206_Spacer %>" NAME="spacer"></TD>
+			</TR>
+		</TABLE>
+	</TD>
+</TR>
+</TABLE>
+<% if (masterKeywordList.length > 0) { %>
+<TABLE ID="categories" NAME="categories" SUMMARY="browse by category table" WIDTH="191" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR>
+		<TD>
+			<TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0" SUMMARY="browse table top" ID="browseTop" NAME="browseTop">
+				<TR>
+					<TD>
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/browseTable_tl.gif" WIDTH="17" HEIGHT="61" ALT="<%= Text.Global_206_Spacer %>" NAME="spacer"></TD>
+					<TD>
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/browseTable_tm.gif" WIDTH="158" HEIGHT="61" ALT="<%= Text.Global_206_Spacer %>" NAME="spacer"></TD>
+					<TD>
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/browseTable_tr.gif" WIDTH="17" HEIGHT="61" ALT="<%= Text.Global_206_Spacer %>" NAME="spacer"></TD>
+				</TR>
+			</TABLE>
+		</TD>
+	</TR>
+	<TR>
+		<TD HEIGHT="100%" WIDTH="191">
+			<TABLE SUMMARY="browse" NAME="browse" ID="browse" CELLPADDING="0" CELLSPACING="0" BORDER="0" HEIGHT="100%" WIDTH="191">
+				<TR>
+					<TD HEIGHT="100%" WIDTH="2" ROWSPAN="99">
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH="2" ALT="<%= Text.Global_206_Spacer %>" NAME="spacer"></TD>
+					<TD BGCOLOR="#FFCC00" HEIGHT="100%" WIDTH="1" ROWSPAN="99"></TD>
+					<TD HEIGHT="100%" WIDTH="15" ROWSPAN="99"></TD>
+					<TD VALIGN="TOP" STYLE="padding:2px">
+						<P CLASS="ver11D">
+<% processArray(masterKeywordList, %>
+							<A HREF="/netpub/server.np?quickfind=<%= encodeEscapeURI(masterKeywordList[x]) %>&catalog=<%= catalogName %>&site=<%= encodeURI(Request.getParameter('site')) %>&sorton=[[= Results.sortFieldName ]]&template=results.np" TARGET="_parent">
+<%= htmlEncode(masterKeywordList[x]) %>
+							</A>
+							<BR>
+<% ); %>
+					</TD>
+					<TD BGCOLOR="#FFCC00" HEIGHT="100%" WIDTH="1" ROWSPAN="99"></TD>
+					<TD HEIGHT="100%" WIDTH="2" ROWSPAN="99">
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH="2" ALT="<%= Text.Global_206_Spacer %>" NAME="spacer"></TD>
+				</TR>
+			</TABLE>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0" SUMMARY="browse table bottom" ID="browseBottom" NAME="browseBottom">
+				<TR>
+					<TD>
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/browseTable_bl.gif" WIDTH="17" HEIGHT="23" ALT="<%= Text.Global_206_Spacer %>" NAME="spacer"></TD>
+					<TD>
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/browseTable_bm.gif" WIDTH="158" HEIGHT="23" ALT="<%= Text.Global_206_Spacer %>" NAME="spacer"></TD>
+					<TD>
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/browseTable_br.gif" WIDTH="17" HEIGHT="23" ALT="<%= Text.Global_206_Spacer %>" NAME="spacer"></TD>
+				</TR>
+			</TABLE>
+		</TD>
+	</TR>
+</TABLE>
+<% }  %>
+</BODY>
+</HTML>

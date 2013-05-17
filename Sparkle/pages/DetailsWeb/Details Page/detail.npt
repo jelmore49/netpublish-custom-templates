@@ -1,0 +1,273 @@
+[[
+    library('dynamic_global.np');
+    library('dynamic_detail.np');
+    library('dynamic_collection.np'); 
+]]
+<%
+    library('global.np');
+    library('local.np');
+    library('Text10w.np');
+
+    // Required before you access the RecordSet.record object
+    RecordSet.itemNext();
+    
+    fieldList = RecordSet.record.getTypeAll();
+
+    backUrl = Request.getCookie('PortWebResults');
+    newBackUrl = '/netpub/server.np?';
+    
+    arguments = Request.getParameterAll()
+    for (x = 0; x < arguments.length; x++)
+    {
+        newBackUrl += arguments[x];
+        newBackUrl += '=';
+        newBackUrl += encodeURI(Request.getParameter(arguments[x]));
+        if (x != arguments.length - 1)
+            newBackUrl += '&';
+    }
+    
+    var today = new Date();
+    var expires = new Date(today.getTime() + 28 * 24 * 60 * 60 * 1000); // plus 28 days
+    
+    Response.setCookie('PortWebDetail', newBackUrl, expires.toGMTString(), '/');            
+%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+"http://www.w3.org/TR/1998/REC-html40-19980424/loose.dtd">
+
+<HTML>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/[[= Detail.stylesheet ]]" />
+    <script language="JavaScript" type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/client.js"></script>
+    <title>[[= Global.title ]]</title> 
+</head>
+
+  <BODY onload="preloadImages();" class="white">
+    <TABLE id="main" name="main" summary="main table" cellpadding="0" cellspacing="0" border="0">
+      <TR>
+        <TD valign="BOTTOM">
+          <TABLE id="logoHeader" name="logoHeader" summary="logo and header" border="0" cellpadding="0" cellspacing="0">
+            <TR>
+              <TD><IMG src="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" width="15" height="1" ALT="<%= Text.Global_206_Spacer %>" name="spacer"></TD>
+
+              <TD valign="bottom">
+                <a href="[[= Global.logoLink ]]"><img src="[[= encodeURI(Global.siteRoot) ]]/media/[[= Global.logo ]]" ALT=""  border="0" name="logo"></a></TD></TR>
+          </TABLE>
+        </TD>
+      </TR>
+
+      <TR>
+        <TD>
+	<TABLE ID="nav" NAME="nav" summary="navigation table" WIDTH=800 BORDER=0 CELLPADDING=0 CELLSPACING=0>
+	<TR>
+	<TD>
+	<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH=15 HEIGHT=31 ALT=""></TD>
+	<TD CLASS="color2">
+	<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH=196 HEIGHT=31 ALT=""></TD>
+	<TD>
+	<A HREF="[[= encodeURI(Global.siteRoot) ]]/" ONMOUSEOVER="changeImages('nav_home', '[[= encodeURI(Global.siteRoot) ]]/media/nav_home_over.gif'); return true;" ONMOUSEOUT="changeImages('nav_home', '[[= encodeURI(Global.siteRoot) ]]/media/nav_home.gif'); return true;"><IMG NAME="nav_home" SRC="[[= encodeURI(Global.siteRoot) ]]/media/nav_home.gif" WIDTH=70 HEIGHT=31 BORDER=0 ALT="nav_home"></A></TD>
+	<TD CLASS="color2">
+	<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH=65 HEIGHT=31 ALT=""></TD>
+	<TD>
+	<IMG NAME="nav_browse" SRC="[[= encodeURI(Global.siteRoot) ]]/media/nav_browse_over.gif" WIDTH=74 HEIGHT=31 BORDER=0 ALT="nav_browse"><!--/A=--></TD>
+	<TD CLASS="color2">
+	<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH=60 HEIGHT=31 ALT=""></TD>
+	<TD>
+	<A HREF="/netpub/server.np?show&site=[[= encodeURI(Global.folder) ]]&catalog=catalog&template=collection.np"	ONMOUSEOVER="changeImages('nav_favorites', '[[= encodeURI(Global.siteRoot) ]]/media/nav_favorites_over.gif'); return true;"	ONMOUSEOUT="changeImages('nav_favorites', '[[= encodeURI(Global.siteRoot) ]]/media/nav_favorites.gif'); return true;">	<IMG NAME="nav_favorites" SRC="[[= encodeURI(Global.siteRoot) ]]/media/nav_favorites.gif" WIDTH=96 HEIGHT=31 BORDER=0 ALT="nav_fav"></A></TD>
+	<TD CLASS="color2">
+	<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH=239 HEIGHT=31 ALT=""></TD>
+	</TR>
+	</TABLE>
+        </TD>
+      </TR>
+
+      <TR>
+        <TD align="LEFT">
+          <TABLE id="mid" name="mid" summary="content area table" border="0" cellpadding="0" cellspacing="0">
+            <TR>
+              <TD><IMG src="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" width="15" height="31" ALT="<%= Text.Global_206_Spacer %>" name="spacer"></TD>
+
+              <TD VALIGN=TOP>
+              		<IFRAME NAME="search" ID="search" SRC="/netpub/server.np?base&site=[[= encodeURI(Global.folder) ]]&template=search.np&searchCatalog=catalog" SCROLLING=AUTO WIDTH=210 HEIGHT=600 FRAMEBORDER=0 MARGINHEIGHT=0 MARGINWIDTH=0>
+         			</IFRAME>
+
+              </TD>
+
+              <TD><IMG src="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" width="16" height="1" ALT="<%= Text.Global_206_Spacer %>" name="spacer"></TD>
+
+              <TD valign="TOP">
+				<TABLE ID="content" NAME="content" summary="content" WIDTH=550 BORDER=0 CELLPADDING=0 CELLSPACING=0>
+
+		
+				<TR>
+				<TD COLSPAN=2 VALIGN=TOP><A NAME="results">
+				<P CLASS="ver11D"><IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/detail.gif" ALT="<%= Text.Global_223_Browse %>" NAME="browse" WIDTH="209" HEIGHT="50" BORDER="0" /></TD>
+    			</TR>
+    			
+    			 <!--- LOCAL NAV=-->
+    			<TR><TD COLSPAN=2 NOWRAP><P CLASS="ver10D">&nbsp; <A HREF="[[= encodeURI(Global.siteRoot) ]]/index.html"><%= Text.Global_70_Home %></A> > <A HREF="<%= backUrl %>"><%= Text.Global_68_SearchResults %></A> > <%= Text.Global_69_Detail %></TD></TR>
+    			<TR><TD><img src="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" HEIGHT=15 WIDTH=1 ALT="<%= Text.Global_206_Spacer %>" name="spacer"></TD></TR>
+    			<!--- END LOCAL NAV=-->
+    
+   				<TR>
+					<TD  align=left>
+		
+		<TABLE ID="result1" NAME="result1" CELLPADDING=0 CELLSPACING=0 BORDER=0>
+		<TR><TD><IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" ALT="<%= Text.Global_206_Spacer %>" name="spacer" HEIGHT=1 WIDTH=1></TD></TR>
+		<TR>
+		<TD VALIGN=TOP>
+            <!-------------------------->  
+            <!-- OnClickAction block  -->  
+            <!-------------------------->          
+            [[ if (Detail.clickAction == "download") { ]]
+                <a href="<%= RecordSet.record.original + '&download' %>">
+            [[ } else if (Detail.clickAction == "original") { ]]
+              <a href="<%= RecordSet.record.original %>" target="npView">
+            [[ } ]]
+        
+            <!-------------------------->  
+            <!-- ImageSource block    -->  
+            <!-------------------------->          
+            [[ if (Detail.imageSource == "thumbnail") { ]]
+                <img src="<%= RecordSet.record.thumbnail + [[= Detail.imageWidthArg ]] %>" border=0 ALT="<%= Text.Global_200_Thumbnail %>" [[= Detail.imgAttributes ]]>
+            [[ } else if (Detail.imageSource == "preview") { ]]
+                <img src="<%= RecordSet.record.preview + [[= Detail.imageWidthArg ]] %>" border=0 ALT="<%= Text.Global_200_Thumbnail %>" [[= Detail.imgAttributes ]]>
+            [[ } else if (Detail.imageSource == "original") { ]]
+                <img src="<%= RecordSet.record.original + [[= Detail.imageWidthArg ]] %>" border=0 ALT="<%= Text.Global_200_Thumbnail %>" [[= Detail.imgAttributes ]]>
+            [[ } ]]
+                
+            <!-------------------------->  
+            <!-- OnClickAction cleanup -->  
+            <!-------------------------->          
+            [[ if (Detail.clickAction != "nothing") { ]]            
+                </a>
+            [[ } ]]
+        </TD>
+		</TR>
+		<TR><TD>
+        <IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" ALT="<%= Text.Global_206_Spacer %>" name="spacer" HEIGHT=15 WIDTH=1>
+        </TD>
+        </TR>
+		<TR>
+		<TD ALIGN=LEFT VALIGN=middle>
+		<P CLASS="ver11D">
+		<%= RecordSet.record.get('File Description') %></P>
+		</TD>
+		</TR>
+		<TR><TD>
+        <IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" ALT="<%= Text.Global_206_Spacer %>" name="spacer" HEIGHT=10 WIDTH=1>
+        </TD>
+        </TR>
+		<TR>
+		<TD HEIGHT=20><P CLASS="ar11D">
+		<A HREF="<%= RecordSet.record.original %>" TARGET="pbView">
+            <IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/view.gif" BORDER=0 WIDTH="48" HEIGHT="10" BORDER="0" /></A> 
+<!--------------------------------->  
+<!-- Show Add/Remove Collections -->  
+<!--------------------------------->          
+[[ if (Detail.collectionOptions) { ]]
+
+        &nbsp | &nbsp;
+        <% showAddOrRemove('[[= encodeURI(Global.siteRoot) ]]', false, 'collection.np'); %> 
+<!--------------------------------->  
+<!-- End Show Add/Remove         -->  
+<!--------------------------------->          
+[[ } ]]
+
+<!--------------------------------->  
+<!-- Show Download link -->  
+<!--------------------------------->  
+[[ if (Detail.downloadOriginal) { ]]
+ &nbsp | &nbsp;
+ <a href="<%= RecordSet.record.original + '&download' %>">
+        <IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/download.gif" border=0 height="13" width="83" ALT="<%= Text.Global_215_DownloadOriginal %>" Title="<%= Text.Global_215_DownloadOriginal %>"></a>
+<!--------------------------------->  
+<!-- End Show Download link      -->  
+<!--------------------------------->  
+ [[ } ]]
+
+
+<!--------------------------------->  
+<!-- Show Download as JPEG link --->  
+<!--------------------------------->  
+[[ if (Detail.imageSource == "preview") { ]]
+
+ &nbsp | &nbsp;
+ <a href="<%= RecordSet.record.preview + '&download&filename=' + RecordSet.record.get('Filename') + '.jpg' %>">
+        <IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/downloadasjpeg.gif" border=0 height="13" width="120" ALT="Download as JPEG" Title="Download as JPEG"></a></td>
+<!----------------------------------------->  
+<!-- End Show Download as JPEG link      -->  
+<!----------------------------------------->  
+ [[ } ]]
+
+
+	
+		</TD>
+		</TR>
+
+		<TR><TD>
+        <IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" ALT="<%= Text.Global_206_Spacer %>" name="spacer" HEIGHT=5 WIDTH=1></TD>
+        </TR>
+		
+		<TR>
+		<TD COLSPAN=3 HEIGHT=1 BGCOLOR="FFCC00"></TD>
+		</TR>
+		<TR><TD>
+        <IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" ALT="<%= Text.Global_206_Spacer %>" name="spacer" HEIGHT=20 WIDTH=1></TD>
+        </TR>
+		<TR>
+		<TD COLSPAN=3><P CLASS="ver11D">
+		
+		<%= Text.Global_109_MoreInformation %></P>
+		<P CLASS="ver10D" STYLE="line-height:15px">
+<!-------------------------->  
+<!-- Detail field listing -->  
+<!-------------------------->          
+<% var fieldValue = ""; %>
+[[ Detail.outputFields( ]]
+
+<% fieldValue = [[= JSSafeGetFieldValue('RecordSet.record', Detail.getFieldName()) ]]; %>
+<%   if (fieldValue != "[undefined]" && fieldValue != "") { %>
+
+    <B>[[= htmlEncode(Detail.getFieldName()) ]]</B>: 
+    <%= htmlEncode(LocalizeFieldValue(fieldValue)) %>
+    <BR>
+    <% } %>
+    
+<!-------------------------->  
+<!-- End of field listing -->
+<!-------------------------->  
+[[ ); ]]
+
+		
+		</TABLE>
+				
+	</TD>
+	</TR>
+	</TABLE>
+	
+<BR><BR>
+</TD>
+</TR>
+
+            <TR>
+              <TD colspan="4" align="CENTER">
+                <P class="ver10D">
+                    <!-------------------------->
+                    <!-- Footer HTML          -->
+                    <!-------------------------->
+                    [[= Global.footer ]]
+                </P>
+                <BR>
+                <BR>
+                </P>
+              </TD>
+            </TR>
+          </TABLE>
+        </TD>
+      </TR>
+    </TABLE>
+  </BODY>
+</HTML>
+
+

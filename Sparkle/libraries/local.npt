@@ -1,0 +1,122 @@
+﻿[[
+    library('dynamic_global.np');
+    library('global_strings.np');
+    library('dynamic_collection.np');
+]]
+function showAddOrRemove(siteRoot, version3, template)
+{
+    var cartItems = CollectionSet.get().getItemIDAll();
+    var record = RecordSet.record.itemID;
+
+    for (x = 0; x < cartItems.length; x++)
+    {
+        if (cartItems[x] == record)
+        {
+            var buffer;
+            
+            buffer = '<a href="';
+            buffer += RecordSet.record.getCollectionLink('remove', template)  + '&sorton=[[= Collection.sortFieldName ]]';
+            if (!version3)
+            {
+                buffer += '"><IMG SRC="';
+                buffer += siteRoot;
+            }
+            
+            if (!version3)
+                buffer += '/media/remove.gif" ALT="[[= Strings.Global_92_RemoveFromFavorites ]]" NAME="remove from favorites" WIDTH="64" HEIGHT="10" BORDER="0" /></a>';
+            else    
+                buffer += '">[[= Strings.Global_92_RemoveFromFavorites ]]</a>';
+            
+            Response.write(buffer);
+            return;
+        }
+    }
+
+    var buffer;
+
+    buffer = '<a href="';
+    buffer += RecordSet.record.getCollectionLink('add', template) + '&sorton=[[= Collection.sortFieldName ]]';
+    if (!version3)
+    {
+        buffer += '"><IMG SRC="';
+        buffer += siteRoot;
+    }
+    if (!version3)    
+        buffer += '/media/save.gif" ALT="save from favorites" NAME="save from favorites" WIDTH="44" HEIGHT="10" BORDER="0" /></a>';
+    else    
+        buffer += '">[[= Strings.Global_115_AddToFavorites ]]</a>';
+
+    Response.write(buffer);
+}
+
+function getSearchCriteria(template, itemId)
+{
+    var quickfind = false;
+    var quickValue;
+
+    var arguments = Request.getParameterAll()
+
+    // First look to see what type of search we started with
+    for (x = 0; x < arguments.length; x++)
+    {
+        var command = arguments[x];
+
+        if (command == 'quickfind')
+        {
+            quickfind = true;
+            quickValue = Request.getParameter(command);                
+            break;
+        }
+    }
+
+    var result = "[[= Strings.Global_160_SearchWas ]]";
+    
+    if (quickfind)
+    {
+        if (quickValue == "")
+            quickValue = Request.getParameter("value");
+        
+        if (quickValue != "")
+            result += "[[= Strings.Global_61_SearchContains ]] '" + quickValue + "'";
+        else
+            result += "[[= Strings.Global_161_AllRecords ]]";
+    }
+    else
+    {
+        var join = Request.getParameter("defaultjoin");
+        var addJoin = false;
+        
+        // Dump out all of our existing arguments as they were received
+        for (var x = 1; x >= 1; x++)
+        {
+            var field = Request.getParameter((x == 1 ? "field" : "field" + x));
+            if (field == null || field == "")
+                break;
+                
+            var op = Request.getParameter((x == 1 ? "op" : "op" + x)).toLowerCase();
+            var value = Request.getParameter((x == 1 ? "value" : "value" + x));
+            
+	    var existsOp = (op == "exists" || op == "does not exist");
+            if (value != "" || existsOp)
+            {
+                if (addJoin)
+                    result += " " + join;
+
+		
+                result += ' ' + field + " " + op;
+		if (! existsOp)
+		    result += " '" + value + "'";
+                addJoin = true;
+            }
+        }
+       
+        // No criteria matched the search
+        if (! addJoin)
+        {
+            result = "[[= Strings.Global_93_NoCriteriaEntered ]]";
+        }
+    }
+        
+    
+    return result;
+}    

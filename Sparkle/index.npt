@@ -1,0 +1,106 @@
+[[
+    Template.saveAs('html');
+    
+    library('global_strings.np');
+    library('dynamic_global.np');
+    library('dynamic_results.np'); // For the stylesheet
+    library('dynamic_collection.np'); // For collection sorting
+]]
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+"http://www.w3.org/TR/1998/REC-html40-19980424/loose.dtd">
+<HTML>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/[[= encodeURI(Results.stylesheet) ]]" />
+    <script language="JavaScript" type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/client.js"></script>
+    <title>[[= Global.title ]]</title> 
+</head>
+
+<BODY onload="preloadImages();" class="white">
+<TABLE ID="main" NAME="main" SUMMARY="main table" CELLPADDING="0" CELLSPACING="0" BORDER="0">
+	<TR>
+		<TD VALIGN="BOTTOM">
+		<TABLE ID="logoHeader" NAME="logoHeader" SUMMARY="logo and header" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+		<TR>
+		<TD>
+		<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH="15" HEIGHT="1" ALT="[[= Strings.Global_206_Spacer ]]" NAME="spacer"></TD>
+		<TD VALIGN="bottom">
+                <a href="[[= Global.logoLink ]]"><img src="[[= encodeURI(Global.siteRoot) ]]/media/[[= Global.logo ]]" ALT="" BORDER="0" NAME="logo"></a></TD></TR>
+		</TABLE>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<TABLE ID="nav" NAME="nav" SUMMARY="navigation table" WIDTH="800" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+				<TR>
+					<TD>
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH="15" HEIGHT="31" ALT="[[= Strings.Global_206_Spacer ]]" NAME="spacer"></TD>
+					<TD CLASS="color2">
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH="196" HEIGHT="31" ALT="[[= Strings.Global_206_Spacer ]]" NAME="spacer"></TD>
+					<TD>
+						<IMG NAME="nav_home" SRC="[[= encodeURI(Global.siteRoot) ]]/media/nav_home_over.gif" WIDTH="70" HEIGHT="31" BORDER="0" ALT="nav_home"></TD>
+					<TD CLASS="color2">
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH="65" HEIGHT="31" ALT="[[= Strings.Global_206_Spacer ]]" NAME="spacer"></TD>
+					<TD>
+                        <A HREF="/netpub/server.np?quickfind&site=[[= encodeURI(Global.folder) ]]&sorton=[[= Results.sortFieldName ]]&catalog=catalog&template=results.np&browse" ONMOUSEOVER="changeImages('nav_browse', '[[= encodeURI(Global.siteRoot) ]]/media/nav_browse_over.gif'); return true;" ONMOUSEOUT="changeImages('nav_browse', '[[= encodeURI(Global.siteRoot) ]]/media/nav_browse.gif'); return true;"><IMG NAME="nav_browse" SRC="[[= encodeURI(Global.siteRoot) ]]/media/nav_browse.gif" WIDTH="74" HEIGHT="31" BORDER="0" ALT="nav_browse"></A></TD>
+					<TD CLASS="color2">
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH="60" HEIGHT="31" ALT="[[= Strings.Global_206_Spacer ]]" NAME="spacer"></TD>
+					<TD>
+						<A HREF="/netpub/server.np?show&site=[[= encodeURI(Global.folder) ]]&catalog=catalog&template=collection.np" ONMOUSEOVER="changeImages('nav_favorites', '[[= encodeURI(Global.siteRoot) ]]/media/nav_favorites_over.gif'); return true;" ONMOUSEOUT="changeImages('nav_favorites', '[[= encodeURI(Global.siteRoot) ]]/media/nav_favorites.gif'); return true;"><IMG NAME="nav_favorites" SRC="[[= encodeURI(Global.siteRoot) ]]/media/nav_favorites.gif" WIDTH="96" HEIGHT="31" BORDER="0" ALT="nav_favorites"></A></TD>
+					<TD CLASS="color2">
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH="239" HEIGHT="31" ALT="[[= Strings.Global_206_Spacer ]]" NAME="spacer"></TD>
+				</TR>
+			</TABLE></TD>
+	</TR>
+	<TR>
+		<TD ALIGN="LEFT">
+			<TABLE ID="mid" NAME="mid" SUMMARY="content area table" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+				<TR>
+					<TD>
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH="15" HEIGHT="31" ALT="[[= Strings.Global_206_Spacer ]]" NAME="spacer"></TD>
+					<TD VALIGN="TOP">
+						<IFRAME NAME="search" ID="search" SRC="/netpub/server.np?base&site=[[= encodeURI(Global.folder) ]]&template=search.np&searchCatalog=catalog" SCROLLING="AUTO" WIDTH="210" HEIGHT="600" FRAMEBORDER="0" MARGINHEIGHT="0" MARGINWIDTH="0">
+						</IFRAME></TD>
+					<TD>
+						<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH="16" HEIGHT="1" ALT="[[= Strings.Global_206_Spacer ]]" NAME="spacer"></TD>
+					<TD VALIGN="TOP">
+						<TABLE ID="content" NAME="content" SUMMARY="content" WIDTH="550" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+							<TR>
+								<TD COLSPAN="2">
+									<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/welcome.gif" ALT="[[= Strings.Global_21_Welcome ]]" NAME="welcome" WIDTH="209" HEIGHT="50" BORDER="0"></TD>
+							</TR>
+							<TR>
+								<TD ROWSPAN="99">
+									<IMG SRC="[[= encodeURI(Global.siteRoot) ]]/media/spacer.gif" WIDTH="5" HEIGHT="1" ALT="[[= Strings.Global_206_Spacer ]]" NAME="spacer"></TD>
+								<TD VALIGN="top" ALIGN="left">
+									<P CLASS="ver11D">
+									[[ if (Global.welcome.length > 0) { ]]
+									[[= Global.welcome ]]
+
+									[[ } else { ]]
+										[[= Strings.Global_98_CertainRecords ]]
+								[[ } ]]	
+									</P>
+								</TD>
+							</TR>
+						</TABLE>
+					</TD>
+				</TR>
+				<TR>
+					<TD COLSPAN="4" ALIGN="CENTER">
+						<P CLASS="ver10D">
+                            <!-------------------------->  
+                            <!-- Footer HTML          -->  
+                            <!-------------------------->          
+                            [[= Global.footer ]]
+							<BR>
+							<BR>
+						</P>
+					</TD>
+				</TR>
+			</TABLE>
+		</TD>
+	</TR>
+</TABLE>
+</BODY>
+</HTML>

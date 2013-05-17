@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>MajorVersion</key>
+		<integer>8</integer>
+		<key>MinorVersion</key>
+		<integer>0</integer>
+		<key>PageTemplate</key>
+		<dict>
+			<key>Image</key>
+			<string>site10_detail.jpg</string>
+			<key>Caption</key>
+			<!--Captions should be unique to PageTemplates -->
+			<string>Detail Page</string>
+			<key>Description</key>
+			<string>This page option is designed with a 256-pixel version of the image at the top of the page and field information below the image. The Description field appears as a title element and is not modifiable via the NetPublish Assistant. This option contains a graphic for adding to favorites by default. Description, Filename, Keywords and Cataloged fields are displayed by default.</string>
+			<key>DetailsWeb</key>
+			<!-- This should match PageType -->
+			<dict>
+				<key>ImageSource</key>
+				<string>Thumbnail</string>
+				<key>ShowDownloadOriginal</key>
+				<true/><key>OnClickAction</key>
+				<string>Display Original</string>
+				<key>ImageSize</key>
+				<string>256</string>
+				<key>StyleSheet</key>
+				<string>Effervescence.css</string>
+				<key>ShowCollectionAddDeleteOptionsEnabled</key>
+				<true/>
+				<key>ShowCollectionAddDeleteOptions</key>
+				<true/>
+				<key>DisplayFields</key>
+				<array>
+					<string>Description</string><string>Filename</string><string>Keywords</string><string>Cataloged</string><string>Approved</string><string>Approved By</string><string>Artist Name</string><string>Available on Website</string><string>Brand</string><string>Camera Make</string><string>Camera Model</string><string>Cataloged By</string><string>Changed</string><string>Changed By</string><string>Color Mode</string><string>Copyright</string><string>Created</string><string>Creator Mac</string><string>Description Writer</string><string>Designer</string><string>Directory Path</string><string>Document Title</string><string>Event Date</string><string>Event Name</string><string>EXIF - Aperture</string><string>EXIF - Date Digitized</string><string>EXIF - Date Taken</string><string>EXIF - Exposure Bias</string><string>EXIF - Exposure Time</string><string>EXIF - F-Number</string><string>EXIF - Flash</string><string>EXIF - Focal Length</string><string>EXIF - ISO Speed</string><string>EXIF - Light Source</string><string>EXIF - Metering Mode</string><string>EXIF - Shutter Speed</string><string>Extension</string><string>File Size</string><string>File Type Mac</string><string>Getty Expiration Date</string><string>Height</string><string>Horizontal Resolution</string><string>Image Pick</string><string>Item ID</string><string>Job Status</string><string>Modified</string><string>Movie - Audio Codec</string><string>Movie - Channels</string><string>Movie - Color Depth</string><string>Movie - Duration</string><string>Movie - FPS</string><string>Movie - Sample Rate</string><string>Movie - Sample Size</string><string>Movie - Video Codec</string><string>Number of Pages</string><string>Path</string><string>Photographer</string><string>PixelLive - Author</string><string>PixelLive - Comments</string><string>PixelLive - Copyright</string><string>PixelLive - Date</string><string>PixelLive - Genre</string><string>PixelLive - Title</string><string>Project Description</string><string>Project Number</string><string>Routed To</string><string>Short Filename Win</string><string>Thumbnail Size</string><string>Vertical Resolution</string><string>Volume</string><string>Watermark URL</string><string>Watermarked</string><string>Website</string><string>Width</string><string>Zone Mac</string></array>
+			</dict>
+		</dict>
+	</dict>
+</plist>

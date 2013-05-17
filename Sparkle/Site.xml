@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>MajorVersion</key>
+		<integer>8</integer>
+		<key>MinorVersion</key>
+		<integer>0</integer>
+		<key>SiteTemplate</key>
+		<dict>
+			<key>Image</key>
+			<string>site10_start.jpg</string>
+			<key>Caption</key>
+			<string>Sparkle</string>
+			<key>Description</key>
+			<string>This site includes search, results, detail and favorites pages.  In addition to the search functionality offered in the search page, the default search page contains a "Browse by Category" area that displays master keywords as hyperlinks. This site is designed to show a moderate amount of text from catalog fields in the results page, and to show extensive text from fields in the detail page.</string>
+			<key>PageLayout</key>
+			<array>
+				<dict>
+					<key>Global</key>
+					<true/>
+				</dict>
+				<dict>
+					<key>Search</key>
+					<true/>
+					<key>DefaultSearchPage</key>
+					<string>Search Page 1</string>
+				</dict>
+				<dict>
+					<key>Results</key>
+					<true/>
+					<key>DefaultResultsPage</key>
+					<string>Results Page 4</string>
+				</dict>
+				<dict>
+					<key>DetailsWeb</key>
+					<true/>
+					<key>DefaultDetailsWebPage</key>
+					<string>Detail Page 1</string>
+				</dict>
+				<dict>
+					<key>Collections</key>
+					<true/>
+					<key>DefaultCollectionsPage</key>
+					<string>Collection Page 4</string>
+				</dict>
+				<dict>
+					<key>Publish</key>
+					<true/>
+				</dict>
+			</array>
+			<key>GlobalTemplate</key>
+			<dict>
+				<key>SiteTitle</key>
+				<string>Sparkle</string>
+				<key>MainLogoGraphic</key>
+				<string></string>
+				<key>HeaderHTML</key>
+				<string></string>
+				<key>FooterHTML</key>
+				<string></string>
+				<key>WelcomePageHTML</key>
+				<string></string>
+				<key>IncludeLinkToHomePage</key>
+				<true/>
+				<key>HomePageURL</key>
+				<string>http://127.0.0.1/res/sites/sparkle/</string>
+			</dict>
+			<key>PublishTemplate</key>
+			<dict>
+				<key>SelectedWebServer</key>
+				<!--server name that is selected -->
+				<string>localhost</string>
+				<key>ServerSubFolder</key>
+				<string>sparkle</string>
+				<key>UploadOriginalsWithSite</key>
+				<false/><key>SiteEditingPassword</key>
+				<string></string>
+				<key>SiteViewingPassword</key>
+				<string></string>
+			</dict>
+		</dict>
+	</dict>
+</plist>
