@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>MajorVersion</key>
+		<integer>8</integer>
+		<key>MinorVersion</key>
+		<integer>0</integer>
+		<key>PageTemplate</key>
+		<dict>
+			<key>Image</key>
+			<string>site6_search.jpg</string>
+			<key>Caption</key>
+			<string>Missing Resources search</string>
+			<key>Description</key>
+			<string>Search for missing originals and previews. Also contains a link to a minimal Quickfind page.</string>
+			<key>Search</key>
+			<!-- This should match PageType -->
+			<dict>
+				<key>SearchAllFieldsEnabled</key>
+				<false/>
+				<key>SearchAllFields</key>
+				<false/>
+				<key>ShowFindAll</key>
+				<true/>
+				<key>StyleSheet</key>
+				<string>Bombast.css</string>
+				<key>SearchFieldsEnabled</key>
+				<true/>
+				<key>SearchFields</key>
+				<array>
+					<dict>
+						<key>FieldName</key>
+						<string>Keywords</string>
+						<key>selected</key>
+						<true/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array>
+							<!-- list of selected search operators -->
+							<string>Contains</string>
+						</array>
+					</dict>
+					<dict>
+						<key>FieldName</key>
+						<string>Description</string>
+						<key>selected</key>
+						<true/>
+						<key>InputOption</key>
+						<string>Text Input Box</string>
+						<key>SelectedSearchOperators</key>
+						<array>
+							<!-- list of selected search operators -->
+							<string>Contains</string>
+						</array>
+					</dict>
+				</array>
+			</dict>
+			<!-- end Search -->
+		</dict>
+		<!-- end PageTemplate -->
+	</dict>
+</plist>

@@ -1,0 +1,43 @@
+[[
+library('dynamic_global.np');
+]]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns= "http://www.w3.org/1999/xhtml" xml:lang="en">
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Missing Previews</title> 
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/screen.css" media="screen, projection" />
+<!-- [if lt IE 8]>
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/ie.css" media="screen, projection" />
+<![endif]-->	
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/toolbox.css" />
+</head> 
+<body class="preview">
+<h1>Records with missing previews:</h1>
+<%
+var startTime, endTime, tally = 0, recordOutput = '';
+if (RecordSet.isEmpty()) {
+	Response.write('<p class="error">No records in set</p>');
+} else {	
+	startTime = new Date();
+	recordOutput += '<table>\\n<tr><th>Item ID</th><th>Filename</th></tr>\\n';
+	do {
+		RecordSet.itemNext();
+		if (RecordSet.record.preview.indexOf('missing_preview.gif') !== -1) {
+			recordOutput += '<tr><td>' + RecordSet.record.itemID.toString() + '</td><td>' + RecordSet.record.get('Filename') + '</td></tr>\\n';
+			tally += 1;
+		}
+	} while (RecordSet.hasMore());
+	endTime = new Date();
+	recordOutput += '</table>\\n';
+	if (tally === 0) {
+		Response.write('<p class="notice">No missing previews found</p>');
+	} else {
+		Response.write('<p class="success">Total records: ' + tally + ' of ' + RecordSet.totalItems + ' searched in ' + (endTime - startTime) + ' milliseconds</p>');
+		Response.write(recordOutput);
+	}
+}
+%>
+</body> 
+</html> 

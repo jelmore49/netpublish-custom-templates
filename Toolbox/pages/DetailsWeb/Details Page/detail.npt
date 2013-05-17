@@ -1,0 +1,44 @@
+[[
+library('dynamic_global.np');
+library('dynamic_detail.np');
+]]
+<%
+library('global.np');
+
+//  Loads the first Record into RecordSet.Record; required before you access RecordSet.record
+RecordSet.itemNext();
+
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns= "http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>NetPublish record</title> 
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/screen.css" media="screen, projection" />
+<!-- [if lt IE 8]>
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/ie.css" media="screen, projection" />
+<![endif]-->	
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/toolbox.css" />
+</head>
+<body>
+<ul id="imageData">
+<li><a href="<%= htmlEncode(RecordSet.record.original + '&download') %>" id="downloadLink">Download Link</a></li>
+<li><a href="<%= htmlEncode(RecordSet.record.original) %>" id="viewLink">View Link</a></li>
+<li><a href="<%= htmlEncode(RecordSet.record.thumbnail) %>" id="thumbnailLink">Thumbnail</a></li>
+<li><a href="<%= htmlEncode(RecordSet.record.preview) %>" id="previewLink">Preview</a></li>
+</ul>
+<dl id="fieldData">
+<% var fieldValue = ""; %>
+[[ Detail.outputFields( ]]
+<% fieldValue = [[= JSSafeGetFieldValue('RecordSet.record', Detail.getFieldName()) ]]; %>
+<%   if (fieldValue != "[undefined]" && fieldValue != "") { %>
+<dt id="[[= htmlEncode(Detail.getFieldName()) ]]">[[= htmlEncode(Detail.getFieldName()) ]]</dt>
+<dd>
+<%= htmlEncode(LocalizeFieldValue(fieldValue)) %>
+</dd>
+<% } %>
+[[ ); ]]
+</dl>
+</body>
+</html>

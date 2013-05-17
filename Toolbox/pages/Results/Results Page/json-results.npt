@@ -1,0 +1,20 @@
+<%
+library('global.np'); // Imports Date, Path, and Unit objects
+library('local.np'); // Imports some utility functions
+library('json2.np');
+var jsonResults = {};
+if (RecordSet.isEmpty()) {
+	jsonResults = {'total': 0};
+} else {
+	jsonResults = {'total': RecordSet.totalItems}
+
+	do {
+		// Loads the first Record into RecordSet.Record; required before you access RecordSet.record
+		RecordSet.itemNext();
+		jsonResults[RecordSet.record.itemID] = RecordSet.record.getDetailLink('json-detail.np');
+	} while (RecordSet.hasMore());
+}
+
+Response.setContentType('application/json');
+Response.write(JSON.stringify(jsonResults));
+%>

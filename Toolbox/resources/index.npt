@@ -1,0 +1,6 @@
+[[
+Template.saveAs('js');
+
+library('dynamic_global.np');
+]]
+document.location='/netpub/server.np?base&site=[[= encodeURI(Global.folder) ]]&catalog=catalog&template=search.np'

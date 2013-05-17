@@ -1,0 +1,35 @@
+[[
+library('dynamic_global.np'); // Imports Global object
+library('dynamic_collection.np'); // Imports Collection object
+library('dynamic_results.np'); // Imports Results object
+]]
+<%
+library('global.np'); // Imports Date, Path, and Unit objects
+library('local.np'); // Imports some utility functions
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns= "http://www.w3.org/1999/xhtml" xml:lang="en">
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>NetPublish Results</title> 
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/screen.css" media="screen, projection" />
+<!-- [if lt IE 8]>
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/ie.css" media="screen, projection" />
+<![endif]-->	
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/toolbox.css" />
+</head> 
+<body>
+<ul>
+<% do {
+	//  Loads the first Record into RecordSet.Record; required before you access RecordSet.record
+	RecordSet.itemNext();
+	var itemId = parseInt(RecordSet.record.itemID);
+%>	
+	<li id="id_<%= itemId %>"><a href="<%= htmlEncode(RecordSet.record.getDetailLink('detail.np')) %>">Item ID <%= itemId %></a></li>
+<%
+} while (RecordSet.hasMore());
+%>
+</ul>
+</body> 
+</html> 

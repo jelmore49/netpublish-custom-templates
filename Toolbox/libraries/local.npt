@@ -1,0 +1,113 @@
+[[
+    library('global_strings.np');
+]]
+function getSearchOperatorUI(op) {
+	switch (op) {
+	case 'contains':
+		return '[[= Strings.Operator_Contains ]]';
+	case 'equals':
+		return '[[= Strings.Operator_Equals ]]';
+	case 'exists':
+		return '[[= Strings.Operator_Exists ]]';
+	case 'does not exist':
+		return '[[= Strings.Operator_Does_Not_Exist ]]';
+	case 'matches':
+		return '[[= Strings.Operator_Matches ]]';
+	case 'does not match':
+		return '[[= Strings.Operator_Does_Not_Match ]]';
+	case 'starts with':
+		return '[[= Strings.Operator_Starts_With ]]';
+	case 'does not start with':
+		return '[[= Strings.Operator_Does_Not_Start_With ]]';
+	case 'ends with':
+		return '[[= Strings.Operator_Ends_With ]]';
+	case 'does not end with':
+		return '[[= Strings.Operator_Does_Not_End_With ]]';
+	case 'does not contain':
+		return '[[= Strings.Operator_Does_Not_Contain ]]';
+	case 'does not equal':
+		return '[[= Strings.Operator_Does_Not_Equal ]]';
+	case 'on or after':
+		return '[[= Strings.Operator_On_Or_After ]]';
+	case 'after':
+		return '[[= Strings.Operator_After ]]';
+	case 'on or before':
+		return '[[= Strings.Operator_On_Or_Before ]]';
+	case 'before':
+		return '[[= Strings.Operator_Before ]]';
+	case 'greater than or equals':
+		return '[[= Strings.Operator_Greater_Than_Or_Equals ]]';
+	case 'greater than':
+		return '[[= Strings.Operator_Greater_Than ]]';
+	case 'less than or equals':
+		return '[[= Strings.Operator_Less_Than_Or_Equals ]]';
+	case 'less than':
+		return '[[= Strings.Operator_Less_Than ]]';
+	}
+	return op;
+}
+
+function getSearchJoinUI(join) {
+	switch (join) {
+	case 'and':
+		return '[[= Strings.Join_And ]]';
+	case 'or':
+		return '[[= Strings.Join_Or ]]';
+	}
+	return join;
+}
+
+function getSearchCriteria(template, itemId) {
+	var quickfind = false;
+	var quickValue;
+
+	var args = Request.getParameterAll()
+
+	// First look to see what type of search we started with
+	for (x = 0; x < args.length; x++) {
+		var command = args[x];
+
+		if (command == 'quickfind') {
+			quickfind = true;
+			quickValue = Request.getParameter(command);
+			break;
+		}
+	}
+
+	var result = '[[= Strings.Global_160_SearchWas ]]';
+
+	if (quickfind) {
+		if (quickValue == '') quickValue = Request.getParameter('value');
+
+		if (quickValue != '') result += "[[= Strings.Global_61_SearchContains ]] '" + quickValue + "'";
+		else result += '[[= Strings.Global_161_AllRecords ]]';
+	} else {
+		var join = Request.getParameter('defaultjoin').toLowerCase();
+		var addJoin = false;
+
+		// Dump out all of our existing arguments as they were received
+		for (var x = 1; x >= 1; x++) {
+			var field = Request.getParameter((x == 1 ? 'field' : 'field' + x));
+			if (field == null || field == '') break;
+
+			var op = Request.getParameter((x == 1 ? 'op' : 'op' + x)).toLowerCase();
+			var value = Request.getParameter((x == 1 ? 'value' : 'value' + x));
+
+			var existsOp = (op == 'exists' || op == 'does not exist');
+			if (value != '' || existsOp) {
+				if (addJoin) result += ' ' + getSearchJoinUI(join);
+
+				result += ' ' + field + ' ' + getSearchOperatorUI(op);
+				if (!existsOp) result += " '" + value + "'";
+				addJoin = true;
+			}
+		}
+
+		// No criteria matched the search, effectively all records
+		if (!addJoin) {
+			result += '[[= Strings.Global_161_AllRecords ]]';
+		}
+	}
+
+	return result;
+}

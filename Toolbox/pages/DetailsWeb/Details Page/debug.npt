@@ -1,0 +1,102 @@
+[[
+library('dynamic_global.np');
+]]
+<%
+library('global.np');
+
+that = this;
+
+//  Loads the first Record into RecordSet.record; required before you access RecordSet.record
+RecordSet.itemNext();
+
+getProperties = function(obj) {
+	var props = [];
+
+	for (var s in obj) {
+		if (typeof obj[s] !== "function") {
+			props[props.length] = s;
+		}
+	}
+
+	return props;
+};
+
+var propItem, methodItem,
+globalProps = getProperties(that).sort(),
+rsProps = getProperties(RecordSet).sort(),
+recProps = getProperties(RecordSet.record).sort(),
+csProps = getProperties(CatalogSet).sort(),
+catProps = getProperties(CatalogSet.get('catalog')).sort(),
+reqProps = getProperties(Request).sort(),
+reqParams = Request.getParameterAll().sort();
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns= "http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>[[= Global.title ]]</title> 
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/screen.css" media="screen, projection" />
+<!-- [if lt IE 8]>
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/ie.css" media="screen, projection" />
+<![endif]-->	
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/toolbox.css" />
+</head>
+<body>
+<h3>RecordSet properties</h3>
+<ul>
+<%
+for (propItem in rsProps) {
+Response.write('<li>' + rsProps[propItem] + ': ' + RecordSet[rsProps[propItem]] + '</li>');
+}
+%>
+</ul>
+<h3>Record properties</h3>
+<ul>
+<%
+for (propItem in recProps) {
+Response.write('<li>' + recProps[propItem] + ': ' + RecordSet.record[recProps[propItem]] + '</li>');
+}
+%>
+</ul>
+<h3>CatalogSet properties</h3>
+<ul>
+<%
+for (propItem in csProps) {
+Response.write('<li>' + csProps[propItem] + ': ' + CatalogSet[csProps[propItem]] + '</li>');
+}
+%>
+</ul>
+<h3>Catalog properties</h3>
+<ul>
+<%
+for (propItem in catProps) {
+Response.write('<li>' + catProps[propItem] + ': ' + CatalogSet.get('catalog')[catProps[propItem]] + '</li>');
+}
+%>
+</ul>
+<h3>Request properties</h3>
+<ul>
+<%
+for (propItem in reqProps) {
+Response.write('<li>' + reqProps[propItem] + ': ' + Request[reqProps[propItem]] + '</li>');
+}
+%>
+</ul>
+<h4>Request parameters</h4>
+<ul>
+<% for (i in Request.getParameterAll()) {
+	Response.write('<li>' + reqParams[i] + ': ' + Request.getParameter(reqParams[i]) + '</li>');
+}
+%>
+</ul>
+<h3>Global properties</h3>
+<ul>
+<%
+for (globalItem in globalProps) {
+Response.write('<li>' + globalProps[globalItem] + ': ' + that.globalProps[globalItem] + '</li>');
+}
+%>
+</ul>
+</body>
+</html>

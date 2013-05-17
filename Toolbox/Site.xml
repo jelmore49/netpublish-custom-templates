@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>MajorVersion</key>
+		<integer>8</integer>
+		<key>MinorVersion</key>
+		<integer>0</integer>
+		<key>SiteTemplate</key>
+		<dict>
+			<key>Image</key>
+			<string>toolboox.jpg</string>
+			<key>Caption</key>
+			<string>Toolbox</string>
+			<key>Description</key>
+			<string>This site contains some useful templates for troubleshooting and debugging.</string>
+			<key>PageLayout</key>
+			<array>
+				<dict>
+					<key>Global</key>
+					<true/>
+				</dict>
+				<dict>
+					<key>Search</key>
+					<true/>
+					<key>DefaultSearchPage</key>
+					<string>Missing Resources search</string>
+				</dict>
+				<dict>
+					<key>Results</key>
+					<true/>
+					<key>DefaultResultsPage</key>
+					<string>Minimal Results Page</string>
+				</dict>
+				<dict>
+					<key>DetailsWeb</key>
+					<true/>
+					<key>DefaultDetailsWebPage</key>
+					<string>Details</string>
+				</dict>
+				<dict>
+					<key>Collections</key>
+					<false/>
+				</dict>
+				<dict>
+					<key>Publish</key>
+					<true/>
+				</dict>
+			</array>
+			<key>GlobalTemplate</key>
+			<dict>
+				<key>SiteTitle</key>
+				<string>Portfolio NetPublish Site</string>
+				<key>MainLogoGraphic</key>
+				<string></string>
+				<key>HeaderHTML</key>
+				<string></string>
+				<key>FooterHTML</key>
+				<string></string>
+				<key>WelcomePageHTML</key>
+				<string></string>
+				<key>IncludeLinkToHomePage</key>
+				<false/>
+				<key>HomePageURL</key>
+				<string>http://www.extensis.com/</string>
+			</dict>
+			<key>PublishTemplate</key>
+			<dict>
+				<key>SelectedWebServer</key> <!-- server name that is selected -->
+				<string>Server1</string>
+				<key>ServerSubFolder</key>
+				<string></string>
+				<key>UploadOriginalsWithSite</key>
+				<true/>
+				<key>SiteEditingPassword</key>
+				<string></string>
+				<key>SiteViewingPassword</key>
+				<string></string>
+			</dict>
+		</dict>
+	</dict>
+</plist>

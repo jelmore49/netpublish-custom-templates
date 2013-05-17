@@ -1,0 +1,140 @@
+[[
+library('dynamic_global.np');
+library('dynamic_search.np');
+]]
+<%
+library('global.np');
+
+catalogName = Request.getParameter('searchCatalog');
+if (catalogName.length == 0)
+catalogName = CatalogSet.getAliases()[0];
+fieldList = CatalogSet.get(catalogName).getTypeAll();
+
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns= "http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>NetPublish Toolbox</title>
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/screen.css" media="screen, projection" />
+<!-- [if lt IE 8]>
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/ie.css" media="screen, projection" />
+<![endif]-->	
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/toolbox.css" />
+</head>
+<body>
+<div class="span-12 original">
+<h2>Search records for missing originals</h2>
+<form action="/netpub/server.np?quickfind" method="post">
+<fieldset>
+<input type="hidden" name="catalog" value="<%= catalogName %>" />
+<input type="hidden" name="site" value="<%= Request.getParameter('site') %>" />
+<input type="hidden" name="template" value="mo-results.np" />
+<input type="hidden" name="sorton" value="Filename" />
+<input type="hidden" name="ascending" value="1" />
+<input type="search" name="value" size="20" />
+<input type="submit" value="QuickFind" />
+</fieldset>
+</form>
+<form action="/netpub/server.np?find" method="post">
+<fieldset>
+<input type="hidden" name="catalog" value="<%= catalogName %>" />
+<input type="hidden" name="site" value="<%= Request.getParameter('site') %>" />
+<input type="hidden" name="template" value="mo-detail.np" />
+<input type="hidden" name="field" value="ItemID" />
+<input type="hidden" name="op" value="matches" />
+<input type="search" name="value" size="20" />
+<input type="submit" value="Search by record ID" />
+</fieldset>
+</form>
+<p><a href="/netpub/server.np?quickfind&amp;site=<%= Request.getParameter('site') %>&amp;catalog=catalog&amp;template=mo-results.np">Scan all records for missing originals</a></p>
+<p><b>NOTE:</b> This can tie up server resources until the search is complete.</p>
+</div>
+<div class="span-12 last preview">
+<h2>Search records for missing previews</h2>
+<form action="/netpub/server.np?quickfind" method="post">
+<fieldset>
+<input type="hidden" name="catalog" value="<%= catalogName %>" />
+<input type="hidden" name="site" value="<%= Request.getParameter('site') %>" />
+<input type="hidden" name="template" value="mp-results.np" />
+<input type="hidden" name="sorton" value="Filename" />
+<input type="hidden" name="ascending" value="1" />
+<input type="search" name="value" size="20" />
+<input type="submit" value="QuickFind" />
+</fieldset>
+</form>
+<form action="/netpub/server.np?find" method="post">
+<fieldset>
+<input type="hidden" name="catalog" value="<%= catalogName %>" />
+<input type="hidden" name="site" value="<%= Request.getParameter('site') %>" />
+<input type="hidden" name="template" value="mp-detail.np" />
+<input type="hidden" name="field" value="ItemID" />
+<input type="hidden" name="op" value="matches" />
+<input type="search" name="value" size="20" />
+<input type="submit" value="Search by record ID" />
+</fieldset>
+</form>
+<p><a href="/netpub/server.np?quickfind&amp;site=<%= Request.getParameter('site') %>&amp;catalog=catalog&amp;template=mp-results.np">Scan all records for missing previews</a></p>
+<p><b>NOTE:</b> This can tie up server resources until the search is complete.</p>
+</div>
+<div class="span-12 other">
+<h2>Basic Search</h2>
+<form action="/netpub/server.np?quickfind" method="post">
+<fieldset>
+<input type="hidden" name="catalog" value="<%= catalogName %>" />
+<input type="hidden" name="site" value="<%= Request.getParameter('site') %>" />
+<input type="hidden" name="template" value="results.np" />
+<input type="hidden" name="sorton" value="Filename" />
+<input type="hidden" name="ascending" value="1" />
+<input type="search" name="value" size="20" />
+<input type="submit" value="QuickFind" />
+</fieldset>
+</form>
+<form action="/netpub/server.np?find" method="post">
+<fieldset>
+<input type="hidden" name="catalog" value="<%= catalogName %>" />
+<input type="hidden" name="site" value="<%= Request.getParameter('site') %>" />
+<input type="hidden" name="template" value="detail.np" />
+<input type="hidden" name="field" value="ItemID" />
+<input type="hidden" name="op" value="matches" />
+<input type="search" name="value" size="20" />
+<input type="submit" value="Search by record ID" />
+</fieldset>
+</form>
+<p><a href="/netpub/server.np?quickfind&amp;site=<%= Request.getParameter('site') %>&amp;catalog=catalog&amp;template=results.np">Show All</a></p>
+<p><b>NOTE:</b> This can tie up server resources until the search is complete.</p>
+</div>
+<div class="span-12 last other">
+<h2>Basic Search (JSON results)</h2>
+<form action="/netpub/server.np?quickfind" method="post">
+<fieldset>
+<input type="hidden" name="catalog" value="<%= catalogName %>" />
+<input type="hidden" name="site" value="<%= Request.getParameter('site') %>" />
+<input type="hidden" name="template" value="json-results.np" />
+<input type="hidden" name="sorton" value="Filename" />
+<input type="hidden" name="ascending" value="1" />
+<input type="search" name="value" size="20" />
+<input type="submit" value="QuickFind" />
+</fieldset>
+</form>
+<form action="/netpub/server.np?find" method="post">
+<fieldset>
+<input type="hidden" name="catalog" value="<%= catalogName %>" />
+<input type="hidden" name="site" value="<%= Request.getParameter('site') %>" />
+<input type="hidden" name="template" value="json-detail.np" />
+<input type="hidden" name="field" value="ItemID" />
+<input type="hidden" name="op" value="matches" />
+<input type="search" name="value" size="20" />
+<input type="submit" value="Search by record ID" />
+</fieldset>
+</form>
+<p><a href="/netpub/server.np?quickfind&amp;site=<%= Request.getParameter('site') %>&amp;catalog=catalog&amp;template=json-results.np">Show All</a></p>
+<p><b>NOTE:</b> This can tie up server resources until the search is complete.</p>
+</div>
+<div class="span-24 last">
+<p><a href="/netpub/server.np?quickfind&amp;site=<%= Request.getParameter('site') %>&amp;catalog=catalog&amp;template=debug.np">Misc. Site and Catalog Info</a></p>
+</div>
+<script type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/client.js"></script>
+</body>
+</html>

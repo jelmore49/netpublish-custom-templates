@@ -1,0 +1,18 @@
+[[
+Template.saveAs('html');
+
+library('dynamic_global.np'); // Imports Global object for Global.siteRoot
+library('dynamic_detail.np'); // Imports Detail object for Detail.stylesheet
+]]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns= "http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv= "Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/[[= encodeURI(Detail.stylesheet) ]]" />
+<title>Portfolio NetPublish Site</title> 
+</head>
+<body>
+<script type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>MajorVersion</key>
+		<integer>8</integer>
+		<key>MinorVersion</key>
+		<integer>0</integer>
+		<key>PageTemplate</key>
+		<dict>
+			<key>Image</key>
+			<string>site6_results.jpg</string>
+			<key>Caption</key>
+			<string>Minimal Results Page</string>
+			<key>Description</key>
+			<string>A list of item IDs, with links to a minimal details page and a JSON representation.</string>
+			<key>Results</key>
+			<!-- This should match PageType -->
+			<dict>
+				<key>SummarizeSearchCriteria</key>
+				<false/>
+				<key>SortResults</key>
+				<true/>
+				<key>SortSelection</key>
+				<string>Filename</string>
+				<key>RowsEnabled</key>
+				<true/>
+				<key>Rows</key>
+				<integer>5</integer>
+				<key>ColumnsEnabled</key>
+				<true/>
+				<key>Columns</key>
+				<integer>4</integer>
+				<key>ThumbnailSizeEnabled</key>
+				<true/>
+				<key>ThumbnailSize</key>
+				<string>112</string>
+				<key>OnClickAction</key>
+				<string>Show details</string>
+				<key>ShowCollectionAddDeleteOptionsEnabled</key>
+				<true/>
+				<key>ShowCollectionAddDeleteOptions</key>
+				<true/>
+				<key>ShowCollection</key>
+				<string>Do not show</string>
+				<key>StyleSheet</key>
+				<string>Bombast.css</string>
+				<key>DisplayFields</key>
+				<array>
+					<string>Description</string></array>
+				</dict>
+			</dict>
+		</dict>
+	</plist>

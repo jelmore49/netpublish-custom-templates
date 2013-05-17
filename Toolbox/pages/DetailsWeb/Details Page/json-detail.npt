@@ -1,0 +1,38 @@
+[[
+library('dynamic_global.np');
+library('dynamic_detail.np');
+]]
+<%
+library('global.np');
+library('json2.np');
+
+var jsonRecord = {};
+
+//  Loads the first Record into RecordSet.record; required before you access RecordSet.record
+if (RecordSet.isEmpty()) {
+	jsonRecord = {'itemID': -1};
+} else {
+	RecordSet.itemNext();
+
+	var fieldValue = '',
+	jsonRecord = {
+		'itemID': RecordSet.record.itemID,
+		'downloadLink': RecordSet.record.original + '&download',
+		'viewLink': RecordSet.record.original,
+		'thumbnailLink': RecordSet.record.thumbnail,
+		'previewLink': RecordSet.record.preview,
+		'fields': {}
+	};
+	[[ Detail.outputFields( ]]
+	jsonRecord.fields['[[= htmlEncode(Detail.getFieldName()) ]]'] = htmlEncode(LocalizeFieldValue([[= JSSafeGetFieldValue('RecordSet.record', Detail.getFieldName()) ]]));
+	[[ ); ]]
+
+	// Split keywords into an array
+	if (jsonRecord.fields['Keywords'] != undefined) {
+		jsonRecord.fields['Keywords'] = jsonRecord.fields['Keywords'].split(',');
+	}
+}
+
+Response.setContentType('application/json');
+Response.write(JSON.stringify(jsonRecord));
+%>

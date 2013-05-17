@@ -1,0 +1,33 @@
+[[
+library('dynamic_global.np');
+]]
+<%
+library('global.np');
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns= "http://www.w3.org/1999/xhtml" xml:lang="en">
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Missing Original</title> 
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/screen.css" media="screen, projection" />
+<!-- [if lt IE 8]>
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/ie.css" media="screen, projection" />
+<![endif]-->	
+<link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/toolbox.css" />
+</head> 
+<body class="original">
+<%
+if (RecordSet.isEmpty()) {
+	Response.write('<p class="error">No record in set</p>');
+} else {
+	RecordSet.itemNext();
+	if (RecordSet.record.original.indexOf('missing_original.gif') !== -1) {
+		Response.write('<p class="notice">Original file not found!</p>');
+	} else {
+		Response.write('<p class="success">Original file found!</p>');
+	}
+}
+%>
+</body> 
+</html> 
