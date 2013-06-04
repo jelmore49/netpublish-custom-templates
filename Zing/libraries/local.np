@@ -6,13 +6,11 @@
  */
 
 /**
- * The xor() returns the exclusive OR of the two parameters.
- * @param a The first value or expression to be compared.
- * @param b The second value or expression to be compared.
+ * The xor() function will returns the exclusive OR of the two parameters.
  */
 function xor(a, b) {
 /*
- * We use the ! operator to switch the parameters from "truthy" to real
+ * We use the ! operator to switch each parameter from "truthy" to real
  * Booleans; this inverts the value of both parameters, so the comparison will
  * still work. Then we return true if only one of them is false.
  */
@@ -21,10 +19,9 @@ function xor(a, b) {
 
 /**
  * The every() class method passes each element of an array into a function
- * and returns true if the function returns true for each element.
- * @param fn The function to be called on each element of the array.
- * The function must return either true or false.
- * @param scopeObj
+ * and returns true if the function returns true for each element. It takes
+ * two parameters; the function to pass each element to, and an optional
+ * scope object. The function must return either true or false.
  */
 if (typeof Array.prototype.every !== 'function') {
     Array.prototype.every = function (fn, scopeObj) {
@@ -40,8 +37,8 @@ if (typeof Array.prototype.every !== 'function') {
                 continue;
             }
 /*
- * We call the supplied function on the element; if it returns false then
- * we also return false and are done.
+ * If not, then we call the supplied function on the element; if it returns
+ * false then we also return false and are done.
  */
             if (!fn(this[i], i, scopeObj)) {
                 return false;
@@ -58,9 +55,8 @@ if (typeof Array.prototype.every !== 'function') {
 /**
  * The filter() class method passes each element of an array into a function
  * and returns a new array of every element that the function returns true for.
- * @param fn The function to be called on each element of the array.
- * The function must return either true or false.
- * @param scopeObj
+ * It takes two parameters; the function to pass each element to, and
+ * an optional scope object. The function must return either true or false.
  */
 if (typeof Array.prototype.filter !== 'function') {
     Array.prototype.filter = function (fn, scopeObj) {
@@ -100,9 +96,8 @@ if (typeof Array.prototype.filter !== 'function') {
  * and returns false if the function returns false for each element.
  * It differs from Array.every() in that every() tells us if ALL of the elements
  * are "true", while some() tells us if ANY of the elements are "true".
- * @param fn The function to be called on each element of the array.
- * The function must return either true or false.
- * @param scopeObj
+ * It takes two parameters; the function to pass each element to, and
+ * an optional scope object. The function must return either true or false.
  */
 if (typeof Array.prototype.some !== 'function') {
     Array.prototype.some = function (fn, scopeObj) {
@@ -118,8 +113,8 @@ if (typeof Array.prototype.some !== 'function') {
                 continue;
             }
 /*
- * We call the supplied function on the element; if it returns true then
- * we also return true and are done.
+ * If not, then we call the supplied function on the element; if it returns true
+ * then we also return true and are done.
  */
             if (fn(this[i], i, scopeObj)) {
                 return true;
@@ -148,9 +143,8 @@ if (typeof Array.prototype.some !== 'function') {
  *
  *     array.forEach(doSomething);
  *
- * @param fn The function to be called on each element of the array.
- * The function should not change the value of the element.
- * @param scopeObj
+ * It takes two parameters; the function to pass each element to, and
+ * an optional scope object.
  */
 if (typeof Array.prototype.forEach !== 'function') {
     Array.prototype.forEach = function (fn, scopeObj) {
@@ -166,22 +160,53 @@ if (typeof Array.prototype.forEach !== 'function') {
                 continue;
             }
 /*
- * We call the supplied function on the element.
+ * If not, then we call the supplied function on the element.
  */
             fn(this[i], i, this);
         }
     };
 }
 
-// map() passes each element to a function
-// and returns an array of the results
+/**
+ * The map() class method passes each element of an array into a function,
+ * which performs an operation on the element used as a parameter, and returns
+ * an array of the results. It differs from Array.forEach() in that forEach()
+ * can potentially modify the elements in place, where map() creates a new
+ * array for the results.
+ *
+ * It is intended as a replacement for the for loop that iterates over every
+ * element in an array. Instead of writing this:
+ *
+ *     resultArray = [];
+ *     for (i = 0; i < array.length; i++) {
+ *         resultArray.push(doSomethingWith(array[i]));
+ *     }
+ *
+ * you can write this:
+ *
+ *     resultArray = array.map(doSomethingWith);
+ *
+ * It takes two parameters; the function to pass each element to, and
+ * an optional scope object.
+ */
 if (typeof Array.prototype.map !== 'function') {
     Array.prototype.map = function (fn, scopeObj) {
+/*
+ * We create an empty array to hold the results andstart a loop to handle
+ * each element of the array.
+ */
         var i, results = [];
         for (i = 0; i < this.length; i += 1) {
+/*
+ * If the element is undefined then we skip to the next one.
+ */
             if (this[i] === undefined) {
                 continue;
             }
+/*
+ * If not, then we call the supplied function on the element and push
+ * the result into the result array.
+ */
             results.push(fn(this[i], i, scopeObj));
         }
         return results;
