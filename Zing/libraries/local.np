@@ -1,89 +1,191 @@
-// This file defines convenience functions that are to be used site-wide
+/**
+ * local.np
+ * @author Jay Elmore
+ * This file defines convenience functions that are to be used throughout the
+ * NetPublish template.
+ */
 
+/**
+ * The xor() returns the exclusive OR of the two parameters.
+ * @param a The first value or expression to be compared.
+ * @param b The second value or expression to be compared.
+ */
 function xor(a, b) {
-	// NOTs boths of the values to convert them from "truthy" to real Booleans
-	// then returns true if they are different
-	// If you want an inline comparison, use "(!a !== !b)"; this function is for code clarity
-	return (!a !== !b)
+/*
+ * We use the ! operator to switch the parameters from "truthy" to real
+ * Booleans; this inverts the value of both parameters, so the comparison will
+ * still work. Then we return true if only one of them is false.
+ */
+    return (!a !== !b)
 }
-// every() passes each element to a function
-// and returns true if the function returns true in all cases
+
+/**
+ * The every() class method passes each element of an array into a function
+ * and returns true if the function returns true for each element.
+ * @param fn The function to be called on each element of the array.
+ * The function must return either true or false.
+ * @param scopeObj
+ */
 if (typeof Array.prototype.every !== 'function') {
-	Array.prototype.every = function (fn, scopeObj) {
-		var i;
-		for (i = 0; i < this.length; i += 1) {
-			if (this[i] === undefined) {
-				continue;
-			}
-			if (!fn(this[i], i, scopeObj)) {
-				return false;
-			}
-		}
-		return true;
-	};
+    Array.prototype.every = function (fn, scopeObj) {
+/*
+ * We start a loop to handle each element of the array.
+ */
+        var i;
+        for (i = 0; i < this.length; i += 1) {
+/*
+ * If the element is undefined then we skip to the next one.
+ */
+            if (this[i] === undefined) {
+                continue;
+            }
+/*
+ * We call the supplied function on the element; if it returns false then
+ * we also return false and are done.
+ */
+            if (!fn(this[i], i, scopeObj)) {
+                return false;
+            }
+        }
+/*
+ * If we get through the entire array without the function returning false then
+ * we return true and are done.
+ */
+        return true;
+    };
 }
 
-// filter() passes each element to a function
-// and returns an array of every element that returns true
+/**
+ * The filter() class method passes each element of an array into a function
+ * and returns a new array of every element that the function returns true for.
+ * @param fn The function to be called on each element of the array.
+ * The function must return either true or false.
+ * @param scopeObj
+ */
 if (typeof Array.prototype.filter !== 'function') {
-	Array.prototype.filter = function (fn, scopeObj) {
-		var i, a = [];
-		for (i = 0; i < this.length; i += 1) {
-			if (this[i] === undefined) {
-				continue;
-			}
-			if (!fn(this[i], i, scopeObj)) {
-				continue;
-			}
-			a.push(this[i]);
-		}
-		return a;
-	};
+    Array.prototype.filter = function (fn, scopeObj) {
+/*
+ * The array "a" will hold our results.
+ * We start a loop to handle each element of the array.
+ */
+        var i, a = [];
+        for (i = 0; i < this.length; i += 1) {
+/*
+ * If the element is undefined then we skip to the next one.
+ */
+            if (this[i] === undefined) {
+                continue;
+            }
+/*
+ * If the result of calling the function on the element is false then
+ * we also skip to the next one.
+ */
+            if (!fn(this[i], i, scopeObj)) {
+                continue;
+            }
+/*
+ * If the result is true then we push the element onto the result array.
+ */
+            a.push(this[i]);
+        }
+/*
+ * When we've handled each element of the source array, we return the results.
+ */
+        return a;
+    };
 }
 
-// some() passes each element to a function
-// and returns false if the function returns false in all cases
+/**
+ * The some() class method passes each element of an array into a function
+ * and returns false if the function returns false for each element.
+ * It differs from Array.every() in that every() tells us if ALL of the elements
+ * are "true", while some() tells us if ANY of the elements are "true".
+ * @param fn The function to be called on each element of the array.
+ * The function must return either true or false.
+ * @param scopeObj
+ */
 if (typeof Array.prototype.some !== 'function') {
-	Array.prototype.some = function (fn, scopeObj) {
-		var i;
-		for (i = 0; i < this.length; i += 1) {
-			if (this[i] === undefined) {
-				continue;
-			}
-			if (fn(this[i], i, scopeObj)) {
-				return true;
-			}
-		}
-		return false;
-	};
+    Array.prototype.some = function (fn, scopeObj) {
+/*
+ * We start a loop to handle each element of the array.
+ */
+        var i;
+        for (i = 0; i < this.length; i += 1) {
+/*
+ * If the element is undefined then we skip to the next one.
+ */
+            if (this[i] === undefined) {
+                continue;
+            }
+/*
+ * We call the supplied function on the element; if it returns true then
+ * we also return true and are done.
+ */
+            if (fn(this[i], i, scopeObj)) {
+                return true;
+            }
+        }
+/*
+ * If we get through the entire array without the function returning true then
+ * we return false and are done.
+ */
+        return false;
+    };
 }
 
-// forEach() passes each element to a function
+/**
+ * The forEach() class method passes each element of an array into a function,
+ * which performs an operation using the element as a parameter.
+ *
+ * It is intended as a replacement for the for loop that iterates over every
+ * element in an array. Instead of writing this:
+ *
+ *     for (i = 0; i < array.length; i++) {
+ *          doSomething(array[i]);
+ *     }
+ *
+ * you can write this:
+ *
+ *     array.forEach(doSomething);
+ *
+ * @param fn The function to be called on each element of the array.
+ * The function should not change the value of the element.
+ * @param scopeObj
+ */
 if (typeof Array.prototype.forEach !== 'function') {
-	Array.prototype.forEach = function (fn, scopeObj) {
-		var i;
-		for (i = 0; i < this.length; i += 1) {
-			if (this[i] === undefined) {
-				continue;
-			}
-			fn(this[i], i, this);
-		}
-	};
+    Array.prototype.forEach = function (fn, scopeObj) {
+/*
+ * We start a loop to handle each element of the array.
+ */
+        var i;
+        for (i = 0; i < this.length; i += 1) {
+/*
+ * If the element is undefined then we skip to the next one.
+ */
+            if (this[i] === undefined) {
+                continue;
+            }
+/*
+ * We call the supplied function on the element.
+ */
+            fn(this[i], i, this);
+        }
+    };
 }
 
 // map() passes each element to a function
 // and returns an array of the results
 if (typeof Array.prototype.map !== 'function') {
-	Array.prototype.map = function (fn, scopeObj) {
-		var i, results = [];
-		for (i = 0; i < this.length; i += 1) {
-			if (this[i] === undefined) {
-				continue;
-			}
-			results.push(fn(this[i], i, scopeObj));
-		}
-		return results;
-	};
+    Array.prototype.map = function (fn, scopeObj) {
+        var i, results = [];
+        for (i = 0; i < this.length; i += 1) {
+            if (this[i] === undefined) {
+                continue;
+            }
+            results.push(fn(this[i], i, scopeObj));
+        }
+        return results;
+    };
 }
 
 // indexOf() iterates through the array and
@@ -92,25 +194,25 @@ if (typeof Array.prototype.map !== 'function') {
 // start is index to start searching on; if
 // negative, then counts from the end of the array
 if (typeof Array.prototype.indexOf !== 'function') {
-	Array.prototype.indexOf = function (el, start) {
-		var i, len = this.length;
-		start = start || 0;
-		if ((Math.abs(start) >= len) || (len === 0)) {
-			return -1;
-		}
-		if (start < 0) {
-			start = len + start; //start is negative, so same as (len - Math.abs(start))
-		}
-		for (i = start; i < len; i += 1) {
-			if (this[i] === undefined) {
-				continue;
-			}
-			if (this[i] === el) {
-				return i;
-			}
-		}
-		return -1;
-	};
+    Array.prototype.indexOf = function (el, start) {
+        var i, len = this.length;
+        start = start || 0;
+        if ((Math.abs(start) >= len) || (len === 0)) {
+            return -1;
+        }
+        if (start < 0) {
+            start = len + start; //start is negative, so same as (len - Math.abs(start))
+        }
+        for (i = start; i < len; i += 1) {
+            if (this[i] === undefined) {
+                continue;
+            }
+            if (this[i] === el) {
+                return i;
+            }
+        }
+        return -1;
+    };
 }
 // lastIndexOf() iterates through the array and
 // returns the index of the last appearance of
@@ -118,213 +220,213 @@ if (typeof Array.prototype.indexOf !== 'function') {
 // start is index to start searching on; if
 // negative, then counts from the end of the array
 if (typeof Array.prototype.lastIndexOf !== 'function') {
-	Array.prototype.lastIndexOf = function (el, start) {
-		var i, len = this.length;
-		start = start || 0;
-		if ((Math.abs(start) >= len) || (len === 0)) {
-			return -1;
-		}
-		if (start < 0) {
-			start = len + start; //start is negative, so same as (len - Math.abs(start))
-		}
-		for (i = len; i >= start; i -= 1) {
-			if (this[i] === undefined) {
-				continue;
-			}
-			if (this[i] === el) {
-				return i;
-			}
-		}
-		return -1;
-	};
+    Array.prototype.lastIndexOf = function (el, start) {
+        var i, len = this.length;
+        start = start || 0;
+        if ((Math.abs(start) >= len) || (len === 0)) {
+            return -1;
+        }
+        if (start < 0) {
+            start = len + start; //start is negative, so same as (len - Math.abs(start))
+        }
+        for (i = len; i >= start; i -= 1) {
+            if (this[i] === undefined) {
+                continue;
+            }
+            if (this[i] === el) {
+                return i;
+            }
+        }
+        return -1;
+    };
 }
 
 if (typeof String.prototype.trim !== 'function') {
-	String.prototype.trim = function () {
-		var i,
-		result = this.replace(/^\s\s*/, '');
-		for (i = result.length - 1; i >= 0; i -= 1) {
-			if (/\S/.test(result.charAt(i))) {
-				result = result.substring(0, i + 1);
-				break;
-			}
-		}
-		return result;
-	};
+    String.prototype.trim = function () {
+        var i,
+        result = this.replace(/^\s\s*/, '');
+        for (i = result.length - 1; i >= 0; i -= 1) {
+            if (/\S/.test(result.charAt(i))) {
+                result = result.substring(0, i + 1);
+                break;
+            }
+        }
+        return result;
+    };
 }
 
 // Defines the Local object
 var Local;
 
 if (Local === undefined) {
-	Local = { VERSION: 0.5 };
+    Local = { VERSION: 0.5 };
 }
 
 // Functions common to multiple templates
 Local.common = {
-	// Functions for manipulating collections
-	addToCollectionURI: function (siteName, catalogAlias, itemID, returnTemplate, collectionName) {
-		var uriBuffer = ['/netpub/server.np?add',
-		'itemid=' + itemID,
-		'site=' + siteName,
-		'catalog=' + catalogAlias,
-		'template=' + returnTemplate];
-		if (collectionName) {
-			uriBuffer.push('name=' + collectionName);
-		}
+    // Functions for manipulating collections
+    addToCollectionURI: function (siteName, catalogAlias, itemID, returnTemplate, collectionName) {
+        var uriBuffer = ['/netpub/server.np?add',
+        'itemid=' + itemID,
+        'site=' + siteName,
+        'catalog=' + catalogAlias,
+        'template=' + returnTemplate];
+        if (collectionName) {
+            uriBuffer.push('name=' + collectionName);
+        }
 
-		return uriBuffer.join('&amp;');
-	},
+        return uriBuffer.join('&amp;');
+    },
 
-	removeFromCollectionURI: function (siteName, catalogAlias, itemID, returnTemplate, collectionName) {
-		var uriBuffer = ['/netpub/server.np?remove',
-		'itemid=' + itemID,
-		'site=' + siteName,
-		'catalog=' + catalogAlias,
-		'template=' + returnTemplate];
-		if (collectionName) {
-			uriBuffer.push('name=' + collectionName);
-		}
+    removeFromCollectionURI: function (siteName, catalogAlias, itemID, returnTemplate, collectionName) {
+        var uriBuffer = ['/netpub/server.np?remove',
+        'itemid=' + itemID,
+        'site=' + siteName,
+        'catalog=' + catalogAlias,
+        'template=' + returnTemplate];
+        if (collectionName) {
+            uriBuffer.push('name=' + collectionName);
+        }
 
-		return uriBuffer.join('&amp;');
-	},
+        return uriBuffer.join('&amp;');
+    },
 
-	clearCollectionURI: function (siteName, catalogAlias, returnTemplate, collectionName) {
-		var uriBuffer = ['/netpub/server.np?remove',
-		'all',
-		'site=' + siteName,
-		'catalog=' + catalogAlias,
-		'template=' + returnTemplate];
-		if (collectionName) {
-			uriBuffer.push('name=' + collectionName);
-		}
+    clearCollectionURI: function (siteName, catalogAlias, returnTemplate, collectionName) {
+        var uriBuffer = ['/netpub/server.np?remove',
+        'all',
+        'site=' + siteName,
+        'catalog=' + catalogAlias,
+        'template=' + returnTemplate];
+        if (collectionName) {
+            uriBuffer.push('name=' + collectionName);
+        }
 
-		return uriBuffer.join('&amp;');
-	},
+        return uriBuffer.join('&amp;');
+    },
 
-	downloadCollectionURI: function (siteName, catalogAlias, returnTemplate, collectionName, filename) {
-		var uriBuffer = ['/netpub/server.np?archive',
-		'site=' + siteName,
-		'catalog=' + catalogAlias,
-		'template=' + returnTemplate,
-		'filename=' + filename,
-		'format=zip'];
-		if (collectionName) {
-			uriBuffer.push('name=' + collectionName);
-		}
+    downloadCollectionURI: function (siteName, catalogAlias, returnTemplate, collectionName, filename) {
+        var uriBuffer = ['/netpub/server.np?archive',
+        'site=' + siteName,
+        'catalog=' + catalogAlias,
+        'template=' + returnTemplate,
+        'filename=' + filename,
+        'format=zip'];
+        if (collectionName) {
+            uriBuffer.push('name=' + collectionName);
+        }
 
-		return uriBuffer.join('&amp;');
-	},
+        return uriBuffer.join('&amp;');
+    },
 
-	showCollectionURI: function (siteName, catalogAlias, returnTemplate, collectionName, sortField) {
-		var uriBuffer = ['/netpub/server.np?show',
-		'site=' + siteName,
-		'catalog=' + catalogAlias,
-		'template=' + returnTemplate,
-		'sorton=' + sortField];
-		if (collectionName) {
-			uriBuffer.push('name=' + collectionName);
-		}
+    showCollectionURI: function (siteName, catalogAlias, returnTemplate, collectionName, sortField) {
+        var uriBuffer = ['/netpub/server.np?show',
+        'site=' + siteName,
+        'catalog=' + catalogAlias,
+        'template=' + returnTemplate,
+        'sorton=' + sortField];
+        if (collectionName) {
+            uriBuffer.push('name=' + collectionName);
+        }
 
-		return uriBuffer.join('&amp;');
-	},
+        return uriBuffer.join('&amp;');
+    },
 
-	// Use the "base" command if your template does not require access to the RecordSet object
-	baseSearchURI: function (siteName, catalogAlias, returnTemplate) {
-		return ['/netpub/server.np?base',
-		'site=' + siteName,
-		'searchCatalog=' + catalogAlias,
-		'template=' + returnTemplate].join('&amp;');
-	},
+    // Use the "base" command if your template does not require access to the RecordSet object
+    baseSearchURI: function (siteName, catalogAlias, returnTemplate) {
+        return ['/netpub/server.np?base',
+        'site=' + siteName,
+        'searchCatalog=' + catalogAlias,
+        'template=' + returnTemplate].join('&amp;');
+    },
 
-	// Convenience functions for certain common requests
-	homePageURI: function (siteName, catalogAlias, returnTemplate) {
-		return ['/netpub/server.np?base',
-		'site=' + siteName,
-		'catalog=' + catalogAlias,
-		'template=' + returnTemplate].join('&amp;');
-	},
+    // Convenience functions for certain common requests
+    homePageURI: function (siteName, catalogAlias, returnTemplate) {
+        return ['/netpub/server.np?base',
+        'site=' + siteName,
+        'catalog=' + catalogAlias,
+        'template=' + returnTemplate].join('&amp;');
+    },
 
-	detailsURI: function (siteName, catalogAlias, returnTemplate, itemID) {
-		return ['/netpub/server.np?find',
-		'site=' + siteName,
-		'catalog=' + catalogAlias,
-		'template=' + returnTemplate,
-		'field=itemid',
-		'op=matches',
-		'value=' + itemID].join('&amp;');
-	},
+    detailsURI: function (siteName, catalogAlias, returnTemplate, itemID) {
+        return ['/netpub/server.np?find',
+        'site=' + siteName,
+        'catalog=' + catalogAlias,
+        'template=' + returnTemplate,
+        'field=itemid',
+        'op=matches',
+        'value=' + itemID].join('&amp;');
+    },
 
-	showAllURI: function (siteName, catalogAlias, returnTemplate, sortField, browse) {
-		var uriBuffer = ['/netpub/server.np?quickfind',
-		'site=' + siteName,
-		'catalog=' + catalogAlias,
-		'template=' + returnTemplate,
-		'sorton=' + sortField];
-		if (browse) {
-			uriBuffer.push('browse=true');
-		}
+    showAllURI: function (siteName, catalogAlias, returnTemplate, sortField, browse) {
+        var uriBuffer = ['/netpub/server.np?quickfind',
+        'site=' + siteName,
+        'catalog=' + catalogAlias,
+        'template=' + returnTemplate,
+        'sorton=' + sortField];
+        if (browse) {
+            uriBuffer.push('browse=true');
+        }
 
-		return uriBuffer.join('&amp;');
-	},
+        return uriBuffer.join('&amp;');
+    },
 
-	searchByCategoryURI: function (siteName, catalogAlias, returnTemplate, categoryKeyword, sortField) {
-		return ['/netpub/server.np?quickfind=' + categoryKeyword,
-		'site=' + siteName,
-		'catalog=' + catalogAlias,
-		'template=' + returnTemplate,
-		'sorton=' + sortField].join('&amp;');
-	},
+    searchByCategoryURI: function (siteName, catalogAlias, returnTemplate, categoryKeyword, sortField) {
+        return ['/netpub/server.np?quickfind=' + categoryKeyword,
+        'site=' + siteName,
+        'catalog=' + catalogAlias,
+        'template=' + returnTemplate,
+        'sorton=' + sortField].join('&amp;');
+    },
 
-	quicksearchURI: function (siteName, catalogAlias, returnTemplate, searchTerm, sortField) {
-		return ['/netpub/server.np?quickfind',
-		'site=' + siteName,
-		'catalog=' + catalogAlias,
-		'template=' + returnTemplate,
-		'value=' + searchTerm,
-		'sorton=' + sortField].join('&amp;');
-	},
+    quicksearchURI: function (siteName, catalogAlias, returnTemplate, searchTerm, sortField) {
+        return ['/netpub/server.np?quickfind',
+        'site=' + siteName,
+        'catalog=' + catalogAlias,
+        'template=' + returnTemplate,
+        'value=' + searchTerm,
+        'sorton=' + sortField].join('&amp;');
+    },
 
-	thumbnailURI: function (siteName, catalogAlias, itemID) {
-		return ['/netpub/server.np?thumbnail',
-		'itemid=' + itemID,
-		'site=' + siteName,
-		'catalog=' + catalogAlias].join('&amp;');
-	},
+    thumbnailURI: function (siteName, catalogAlias, itemID) {
+        return ['/netpub/server.np?thumbnail',
+        'itemid=' + itemID,
+        'site=' + siteName,
+        'catalog=' + catalogAlias].join('&amp;');
+    },
 
-	// previewURI(), originalURI(), and downloadURI() may return broken links
-	// if the appropriate assets are not available to NetPublish
-	// If you want the "Missing Preview" image to appear, call RecordSet.record.preview instead
-	previewURI: function (siteName, catalogAlias, itemID) {
-		return ['/netpub/server.np?preview',
-		'itemid=' + itemID,
-		'site=' + siteName,
-		'catalog=' + catalogAlias].join('&amp;');
-	},
+    // previewURI(), originalURI(), and downloadURI() may return broken links
+    // if the appropriate assets are not available to NetPublish
+    // If you want the "Missing Preview" image to appear, call RecordSet.record.preview instead
+    previewURI: function (siteName, catalogAlias, itemID) {
+        return ['/netpub/server.np?preview',
+        'itemid=' + itemID,
+        'site=' + siteName,
+        'catalog=' + catalogAlias].join('&amp;');
+    },
 
-	// If you want the "Missing Original" image or "Cannot Render Image" to appear, call RecordSet.record.original instead
-	originalURI: function (siteName, catalogAlias, itemID) {
-		return ['/netpub/server.np?original',
-		'itemid=' + itemID,
-		'site=' + siteName,
-		'catalog=' + catalogAlias].join('&amp;');
-	},
+    // If you want the "Missing Original" image or "Cannot Render Image" to appear, call RecordSet.record.original instead
+    originalURI: function (siteName, catalogAlias, itemID) {
+        return ['/netpub/server.np?original',
+        'itemid=' + itemID,
+        'site=' + siteName,
+        'catalog=' + catalogAlias].join('&amp;');
+    },
 
-	// If you want the "Missing Original" image to appear, call RecordSet.record.original and append "&amp;download" instead
-	downloadURI: function (siteName, catalogAlias, itemID) {
-		return ['/netpub/server.np?original',
-		'itemid=' + itemID,
-		'site=' + siteName,
-		'catalog=' + catalogAlias,
-		'download'].join('&amp;');
-	},
+    // If you want the "Missing Original" image to appear, call RecordSet.record.original and append "&amp;download" instead
+    downloadURI: function (siteName, catalogAlias, itemID) {
+        return ['/netpub/server.np?original',
+        'itemid=' + itemID,
+        'site=' + siteName,
+        'catalog=' + catalogAlias,
+        'download'].join('&amp;');
+    },
 
-	// Untested
-	isMissingOriginal: function () {
-		return (RecordSet.record.original.indexOf('missing_original.gif') !== -1);
-	},
+    // Untested
+    isMissingOriginal: function () {
+        return (RecordSet.record.original.indexOf('missing_original.gif') !== -1);
+    },
 
-	isMissingPreview: function () {
-		return (RecordSet.record.preview.indexOf('missing_preview.gif') !== -1);
-	}
+    isMissingPreview: function () {
+        return (RecordSet.record.preview.indexOf('missing_preview.gif') !== -1);
+    }
 };
