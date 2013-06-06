@@ -23,21 +23,21 @@ recordTemplate = (
 [[ switch (Results.clickAction) {
 case 'original': ]]
 '<a href="' + RecordSet.record.original + '">' + // OnClickAction block
-'<img src="' + Local.common.thumbnailURI(Local.results.siteName, Local.results.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" />' + // ImageSize block
+'<img src="' + RecordSet.record.thumbnail + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" />' + // ImageSize block
 '</a>' +
 [[ break;
 case 'download': ]]
 '<a href="' + RecordSet.record.original + '&amp;download">' + // OnClickAction block
-'<img src="' + Local.common.thumbnailURI(Local.results.siteName, Local.results.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" />' + // ImageSize block
+'<img src="' + RecordSet.record.thumbnail + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" />' + // ImageSize block
 '</a>' +
 [[ break;
 case 'detail': ]]
 '<a href="' + Local.common.detailsURI(Local.results.siteName, Local.results.catalogAlias, 'detail.np', RecordSet.record.itemID) + '">' + // OnClickAction block
-'<img src="' + Local.common.thumbnailURI(Local.results.siteName, Local.results.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" />' + // ImageSize block
+'<img src="' + RecordSet.record.thumbnail + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" />' + // ImageSize block
 '</a>' +
 [[ break; // "Do nothing" is the default
 default: ]]
-'<img src="' + Local.common.thumbnailURI(Local.results.siteName, Local.results.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" />' + // ImageSize block
+'<img src="' + RecordSet.record.thumbnail + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" />' + // ImageSize block
 [[ } ]]
 '</div>' +
 '<div class="fields span-10 last">' +
@@ -97,21 +97,21 @@ recordTemplate += (
 [[ switch (Results.clickAction) {
 case 'original': ]]
 '<a href="' + RecordSet.record.original + '">' + // OnClickAction block
-'<img src="' + Local.common.thumbnailURI(Local.results.siteName, Local.results.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" title="' + htmlEncode(LocalizeFieldValue(RecordSet.record.get('Filename', -1, 0))) + '" />' + // ImageSize block
+'<img src="' + RecordSet.record.thumbnail + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" title="' + htmlEncode(LocalizeFieldValue(RecordSet.record.get('Filename', -1, 0))) + '" />' + // ImageSize block
 '</a>' +
 [[ break;
 case 'download': ]]
 '<a href="' + RecordSet.record.original + '&amp;download">' + // OnClickAction block
-'<img src="' + Local.common.thumbnailURI(Local.results.siteName, Local.results.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" title="' + htmlEncode(LocalizeFieldValue(RecordSet.record.get('Filename', -1, 0))) + '" />' + // ImageSize block
+'<img src="' + RecordSet.record.thumbnail + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" title="' + htmlEncode(LocalizeFieldValue(RecordSet.record.get('Filename', -1, 0))) + '" />' + // ImageSize block
 '</a>' +
 [[ break;
 case 'detail': ]]
 '<a href="' + Local.common.detailsURI(Local.results.siteName, Local.results.catalogAlias, 'detail.np', RecordSet.record.itemID) + '">' + // OnClickAction block
-'<img src="' + Local.common.thumbnailURI(Local.results.siteName, Local.results.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" title="' + htmlEncode(LocalizeFieldValue(RecordSet.record.get('Filename', -1, 0))) + '" />' + // ImageSize block
+'<img src="' + RecordSet.record.thumbnail + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" title="' + htmlEncode(LocalizeFieldValue(RecordSet.record.get('Filename', -1, 0))) + '" />' + // ImageSize block
 '</a>' +
 [[ break; // "Do nothing" is the default
 default: ]]
-'<img src="' + Local.common.thumbnailURI(Local.results.siteName, Local.results.catalogAlias, RecordSet.record.itemID) + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" title="' + htmlEncode(LocalizeFieldValue(RecordSet.record.get('Filename', -1, 0))) + '" />' + // ImageSize block
+'<img src="' + RecordSet.record.thumbnail + '" alt="' + Local.strings.imagealt.Thumbnail + '" ' + (RecordSet.record.thumbnailWidth > RecordSet.record.thumbnailHeight ? "width" : "height") + '="' + [[= Results.thumbnailSize ]] + '" title="' + htmlEncode(LocalizeFieldValue(RecordSet.record.get('Filename', -1, 0))) + '" />' + // ImageSize block
 [[ } ]]
 '</div>');
 recordTemplate += '<p class="detailLinks">';

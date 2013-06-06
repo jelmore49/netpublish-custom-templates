@@ -574,40 +574,6 @@ return ['/netpub/server.np?quickfind=' + searchTerm,
 'sorton=' + sortField].join('&amp;');
 },
 
-thumbnailURI: function (siteName, catalogAlias, itemID) {
-return ['/netpub/server.np?thumbnail',
-'itemid=' + itemID,
-'site=' + siteName,
-'catalog=' + catalogAlias].join('&amp;');
-},
-
-// previewURI(), originalURI(), and downloadURI() may return broken links
-// if the appropriate assets are not available to NetPublish
-// If you want the "Missing Preview" image to appear, call RecordSet.record.preview instead
-previewURI: function (siteName, catalogAlias, itemID) {
-return ['/netpub/server.np?preview',
-'itemid=' + itemID,
-'site=' + siteName,
-'catalog=' + catalogAlias].join('&amp;');
-},
-
-// If you want the "Missing Original" image or "Cannot Render Image" to appear, call RecordSet.record.original instead
-originalURI: function (siteName, catalogAlias, itemID) {
-return ['/netpub/server.np?original',
-'itemid=' + itemID,
-'site=' + siteName,
-'catalog=' + catalogAlias].join('&amp;');
-},
-
-// If you want the "Missing Original" image to appear, call RecordSet.record.original and append "&amp;download" instead
-downloadURI: function (siteName, catalogAlias, itemID) {
-return ['/netpub/server.np?original',
-'itemid=' + itemID,
-'site=' + siteName,
-'catalog=' + catalogAlias,
-'download'].join('&amp;');
-},
-
 /*
 * In NetPublish 10.0, this could return incorrect results if the original file
 * is replaced later, unless NetPublish is restarted. This is fixed in
