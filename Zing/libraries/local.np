@@ -18,7 +18,7 @@ function xor(a, b) {
 }
 
 /**
- * The every() class method passes each element of an array into a function
+ * The every() instance method passes each element of an array into a function
  * and returns true if the function returns true for each element. It takes
  * two parameters; the function to pass each element to, and an optional
  * scope object. The function must return either true or false.
@@ -53,7 +53,7 @@ if (typeof Array.prototype.every !== 'function') {
 }
 
 /**
- * The filter() class method passes each element of an array into a function
+ * The filter() instance method passes each element of an array into a function
  * and returns a new array of every element that the function returns true for.
  * It takes two parameters; the function to pass each element to, and
  * an optional scope object. The function must return either true or false.
@@ -92,7 +92,7 @@ if (typeof Array.prototype.filter !== 'function') {
 }
 
 /**
- * The some() class method passes each element of an array into a function
+ * The some() instance method passes each element of an array into a function
  * and returns false if the function returns false for each element.
  * It differs from Array.every() in that every() tells us if ALL of the elements
  * are "true", while some() tells us if ANY of the elements are "true".
@@ -129,7 +129,7 @@ if (typeof Array.prototype.some !== 'function') {
 }
 
 /**
- * The forEach() class method passes each element of an array into a function,
+ * The forEach() instance method passes each element of an array into a function,
  * which performs an operation using the element as a parameter.
  *
  * It is intended as a replacement for the for loop that iterates over every
@@ -168,7 +168,7 @@ if (typeof Array.prototype.forEach !== 'function') {
 }
 
 /**
- * The map() class method passes each element of an array into a function,
+ * The map() instance method passes each element of an array into a function,
  * which performs an operation on the element used as a parameter, and returns
  * an array of the results. It differs from Array.forEach() in that forEach()
  * can potentially modify the elements in place, where map() creates a new
@@ -192,7 +192,7 @@ if (typeof Array.prototype.forEach !== 'function') {
 if (typeof Array.prototype.map !== 'function') {
     Array.prototype.map = function (fn, scopeObj) {
 /*
- * We create an empty array to hold the results andstart a loop to handle
+ * We create an empty array to hold the results and start a loop to handle
  * each element of the array.
  */
         var i, results = [];
@@ -209,71 +209,159 @@ if (typeof Array.prototype.map !== 'function') {
  */
             results.push(fn(this[i], i, scopeObj));
         }
+/*
+ * Once we have finished iterating through the array, we return the
+ * new array containing the results.
+ */
         return results;
     };
 }
 
-// indexOf() iterates through the array and
-// returns the index of the first appearance of
-// the supplied element (or -1 if not found)
-// start is index to start searching on; if
-// negative, then counts from the end of the array
+/*
+ * The indexOf() instance method iterates through an array and returns the index
+ * of the first appearance of the supplied element (or -1 if not found). The
+ * start parameter is the array index to start searching on; if start is
+ * negative, then we count backwards from the end of the array to determine
+ * the starting index.
+ */
 if (typeof Array.prototype.indexOf !== 'function') {
     Array.prototype.indexOf = function (el, start) {
         var i, len = this.length;
+/*
+ * If start is not defined then we set it to 0 in order to start at the
+ * beginning of the array.
+ */
         start = start || 0;
-        if ((Math.abs(start) >= len) || (len === 0)) {
+/*
+ * If the start parameter falls outside of the array, and the array has
+ * at least one element, then we return -1 (not found).
+ */
+        if ((this.length === 0) || (Math.abs(start) >= this.length)) {
             return -1;
         }
+/*
+ * If the start parameter is negative, we count backwards from the end of
+ * the array. Adding the start parameter to the array length is the same as
+ * (len - Math.abs(start)).
+ */
         if (start < 0) {
-            start = len + start; //start is negative, so same as (len - Math.abs(start))
+            start = this.length + start;
         }
-        for (i = start; i < len; i += 1) {
+/*
+ * We start a loop to handle each element of the array, beginning with the
+ * specified index.
+ */
+        for (i = start; i < this.length; i += 1) {
+/*
+ * If the element is undefined then we skip to the next one.
+ */
             if (this[i] === undefined) {
                 continue;
             }
+/*
+ * If not, then we test the supplied object against the current element.
+ * If they match then we return the current array index.
+ * We use the triple equals so that JavaScript does not try to coerce the
+ * object types to match; we should not succeed if we compare 1 (the number)
+ * to "1" (the string).
+ */
             if (this[i] === el) {
                 return i;
             }
         }
-        return -1;
-    };
-}
-// lastIndexOf() iterates through the array and
-// returns the index of the last appearance of
-// the supplied element (or -1 if not found)
-// start is index to start searching on; if
-// negative, then counts from the end of the array
-if (typeof Array.prototype.lastIndexOf !== 'function') {
-    Array.prototype.lastIndexOf = function (el, start) {
-        var i, len = this.length;
-        start = start || 0;
-        if ((Math.abs(start) >= len) || (len === 0)) {
-            return -1;
-        }
-        if (start < 0) {
-            start = len + start; //start is negative, so same as (len - Math.abs(start))
-        }
-        for (i = len; i >= start; i -= 1) {
-            if (this[i] === undefined) {
-                continue;
-            }
-            if (this[i] === el) {
-                return i;
-            }
-        }
+/*
+ * If we finish iterating through the array and do not find the supplied
+ * object, then we return -1.
+ */
         return -1;
     };
 }
 
+/*
+ * The lastIndexOf() instance method iterates through an array and returns
+ * the index of the last appearance of the supplied element (or -1 if
+ * not found). The start parameter is the array index to start searching on;
+ * if start is negative, then we count backwards from the end of the array
+ * to determine the starting index.
+ */
+if (typeof Array.prototype.lastIndexOf !== 'function') {
+    Array.prototype.lastIndexOf = function (el, start) {
+        var i, len = this.length;
+/*
+ * If start is not defined then we set it to 0 in order to start at the
+ * beginning of the array.
+ */
+        start = start || 0;
+/*
+ * If the start parameter falls outside of the array, and the array has
+ * at least one element, then we return -1 (not found).
+ */
+        if ((this.length === 0) || (Math.abs(start) >= this.length)) {
+            return -1;
+        }
+/*
+ * If the start parameter is negative, we count backwards from the end of
+ * the array. Adding the start parameter to the array length is the same as
+ * (len - Math.abs(start)).
+ */
+        if (start < 0) {
+            start = this.length + start;
+        }
+/*
+ * We start a loop to handle each element of the array, beginning with the
+ * last element in the array and counting backwards to the starting index.
+ */
+        for (i = this.length; i >= start; i -= 1) {
+/*
+ * If the element is undefined then we skip to the next one.
+ */
+            if (this[i] === undefined) {
+                continue;
+            }
+/*
+ * If not, then we test the supplied object against the current element.
+ * If they match then we return the current array index.
+ * We use the triple equals so that JavaScript does not try to coerce the
+ * object types to match; we should not succeed if we compare 1 (the number)
+ * to "1" (the string).
+ */
+            if (this[i] === el) {
+                return i;
+            }
+        }
+/*
+ * If we finish iterating through the array and do not find the supplied
+ * object, then we return -1.
+ */
+        return -1;
+    };
+}
+
+/*
+ * The trim() instance method strips any whitespace characters from the
+ * beginning and end of the string it is called on.
+ */
 if (typeof String.prototype.trim !== 'function') {
     String.prototype.trim = function () {
         var i,
+/*
+ * First, we strip any whitespace characters from the beginning of the string
+ * with a regular expression.
+ * We don't use ^\s* in the regex because that would match when there is no
+ * whitespace, and replacing nothing with nothing is a waste.
+ * We don't use ^\s+ because most regex engines optimize the ^\s\s* expression
+ * to be faster.
+ */
         result = this.replace(/^\s\s*/, '');
+/*
+ * Next, we start a loop to work backwards from the end of the string
+ * to find the first non-whitespace character. This is actually a faster
+ * method than using something like this.replace(/\s*$/, '') because
+ * most regex engines do not optimize end-of-string matching well.
+ */
         for (i = result.length - 1; i >= 0; i -= 1) {
             if (/\S/.test(result.charAt(i))) {
-                result = result.substring(0, i + 1);
-                break;
+                return result.substring(0, i + 1);
             }
         }
         return result;
