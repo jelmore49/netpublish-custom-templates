@@ -1,20 +1,47 @@
 /**
  * local.np
  * @author Jay Elmore
- * This file defines convenience functions that are to be used throughout the
- * NetPublish template.
+ * This file defines several general convenience functions and some specific
+ * functions to be used throughout the NetPublish template.
  */
 
 /**
- * The xor() function will returns the exclusive OR of the two parameters.
+ * The xor() function returns the exclusive OR (XOR) of the two parameters,
+ * since JavaScript does not have a built-in XOR operator. It returns true if
+ * and only if one parameter is true and the other parameter is false, but
+ * returns false if both parameters are either true or false.
+ * This is a function so its usage in code is clear; if you wanted a simple
+ * inline comparison without the overhead of a function call, you could use
+ * (!a !== !b) directly.
  */
 function xor(a, b) {
 /*
  * We use the ! operator to switch each parameter from "truthy" to real
  * Booleans; this inverts the value of both parameters, so the comparison will
- * still work. Then we return true if only one of them is false.
+ * still work.
+ * Then we return true if only one of them is false.
  */
     return (!a !== !b)
+}
+
+/**
+ * The JavaScript engine used by Portfolio NetPublish is missing many useful
+ * methods of the Array class that have been standardized in other engines
+ * and made part of ECMAScript 5. So we will define some of these methods
+ * here if they can be implemented as close to the ES5 spec as possible.
+ */
+
+/**
+ * The Array.isArray() class method passes takes a parameter and returns true
+ * if the typeof the parameter is "object and the toString() method of the
+ * object returns "[object Array]", which is the most reliable method of
+ * determining if an object is an array.
+ */
+if (typeof Array.isArray !== 'function') {
+    Array.isArray = function isArray(obj) {
+        return typeof o === 'object' &&
+        Object.prototype.toString.call(obj) === '[object Array]';
+    };
 }
 
 /**
@@ -31,14 +58,14 @@ if (typeof Array.prototype.every !== 'function') {
         var i;
         for (i = 0; i < this.length; i += 1) {
 /*
- * If the element is undefined then we skip to the next one.
+ * If the current element is undefined then we skip to the next one.
  */
             if (this[i] === undefined) {
                 continue;
             }
 /*
- * If not, then we call the supplied function on the element; if it returns
- * false then we also return false and are done.
+ * If not, then we call the supplied function on the current element; if it
+ * returns false then we also return false and are done.
  */
             if (!fn(this[i], i, scopeObj)) {
                 return false;
@@ -67,13 +94,13 @@ if (typeof Array.prototype.filter !== 'function') {
         var i, a = [];
         for (i = 0; i < this.length; i += 1) {
 /*
- * If the element is undefined then we skip to the next one.
+ * If the current element is undefined then we skip to the next one.
  */
             if (this[i] === undefined) {
                 continue;
             }
 /*
- * If the result of calling the function on the element is false then
+ * If the result of calling the function on the current element is false then
  * we also skip to the next one.
  */
             if (!fn(this[i], i, scopeObj)) {
@@ -107,14 +134,14 @@ if (typeof Array.prototype.some !== 'function') {
         var i;
         for (i = 0; i < this.length; i += 1) {
 /*
- * If the element is undefined then we skip to the next one.
+ * If the current element is undefined then we skip to the next one.
  */
             if (this[i] === undefined) {
                 continue;
             }
 /*
- * If not, then we call the supplied function on the element; if it returns true
- * then we also return true and are done.
+ * If not, then we call the supplied function on the current element; if it
+ * returns true then we also return true and are done.
  */
             if (fn(this[i], i, scopeObj)) {
                 return true;
@@ -129,8 +156,8 @@ if (typeof Array.prototype.some !== 'function') {
 }
 
 /**
- * The forEach() instance method passes each element of an array into a function,
- * which performs an operation using the element as a parameter.
+ * The forEach() instance method passes each element of an array into a
+ * function that performs an operation using the element as a parameter.
  *
  * It is intended as a replacement for the for loop that iterates over every
  * element in an array. Instead of writing this:
@@ -154,13 +181,13 @@ if (typeof Array.prototype.forEach !== 'function') {
         var i;
         for (i = 0; i < this.length; i += 1) {
 /*
- * If the element is undefined then we skip to the next one.
+ * If the current element is undefined then we skip to the next one.
  */
             if (this[i] === undefined) {
                 continue;
             }
 /*
- * If not, then we call the supplied function on the element.
+ * If not, then we call the supplied function on the current element.
  */
             fn(this[i], i, this);
         }
@@ -198,13 +225,13 @@ if (typeof Array.prototype.map !== 'function') {
         var i, results = [];
         for (i = 0; i < this.length; i += 1) {
 /*
- * If the element is undefined then we skip to the next one.
+ * If the current element is undefined then we skip to the next one.
  */
             if (this[i] === undefined) {
                 continue;
             }
 /*
- * If not, then we call the supplied function on the element and push
+ * If not, then we call the supplied function on the current element and push
  * the result into the result array.
  */
             results.push(fn(this[i], i, scopeObj));
@@ -253,7 +280,7 @@ if (typeof Array.prototype.indexOf !== 'function') {
  */
         for (i = start; i < this.length; i += 1) {
 /*
- * If the element is undefined then we skip to the next one.
+ * If the current element is undefined then we skip to the next one.
  */
             if (this[i] === undefined) {
                 continue;
@@ -313,7 +340,7 @@ if (typeof Array.prototype.lastIndexOf !== 'function') {
  */
         for (i = this.length; i >= start; i -= 1) {
 /*
- * If the element is undefined then we skip to the next one.
+ * If the current element is undefined then we skip to the next one.
  */
             if (this[i] === undefined) {
                 continue;
@@ -355,27 +382,35 @@ if (typeof String.prototype.trim !== 'function') {
         result = this.replace(/^\s\s*/, '');
 /*
  * Next, we start a loop to work backwards from the end of the string
- * to find the first non-whitespace character. This is actually a faster
- * method than using something like this.replace(/\s*$/, '') because
- * most regex engines do not optimize end-of-string matching well.
+ * to find the first non-whitespace character. This can be faster than using
+ * something like String.replace(/\s*$/, '') because most regex engines do not
+ * optimize end-of-string matching well.
  */
         for (i = result.length - 1; i >= 0; i -= 1) {
             if (/\S/.test(result.charAt(i))) {
                 return result.substring(0, i + 1);
             }
         }
-        return result;
     };
 }
 
-// Defines the Local object
+/*
+ * Now we come to the local NetPublish functions that we want to define.
+ * We declare a variable, "Local", and set it to an object literal (with a
+ * single property, "VERSION") to hold all of the functions we want to define.
+ */
 var Local;
 
 if (Local === undefined) {
     Local = { VERSION: 0.5 };
 }
 
-// Functions common to multiple templates
+/*
+ * Then we create another object literal, "common", to hold the functions that
+ * will be common to the site, regardless of which role the template serves.
+ * In other files we can define other object literals for specific template
+ * roles, to serve as a kind of namespacing.
+ */
 Local.common = {
     // Functions for manipulating collections
     addToCollectionURI: function (siteName, catalogAlias, itemID, returnTemplate, collectionName) {
