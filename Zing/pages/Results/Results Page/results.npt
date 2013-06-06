@@ -47,7 +47,7 @@ $res.initPage();
 </div>
 
 <ul id="navBar" class="span-24 clear">
-<li><a href="<%= $com.homePageURI($res.siteName, $res.catalogAlias, 'home.np') %>"><%= $str.navbar.Home %></a></li>
+<li><a href="<%= $com.baseURI($res.siteName, $res.catalogAlias, 'home.np') %>"><%= $str.navbar.Home %></a></li>
 <% if ($res.searchType === 'browse') { %>
 <li><%= $str.navbar.Browse %></li>
 <% } else { %>

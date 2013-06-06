@@ -152,7 +152,7 @@ the catalog</h2>
 by category</h2>
 <ul>
 <% processArray($src.masterKeywordList, %>
-<li><a href="<%= $com.searchByCategoryURI($src.siteName, $src.catalogAlias, 'results.np', encodeEscapeURI($src.masterKeywordList[x]), $src.sortField) %>" target="_parent"><%= htmlEncode($src.masterKeywordList[x]) %></a></li>
+<li><a href="<%= $com.quicksearchURI($src.siteName, $src.catalogAlias, 'results.np', encodeEscapeURI($src.masterKeywordList[x]), $src.sortField) %>" target="_parent"><%= htmlEncode($src.masterKeywordList[x]) %></a></li>
 <% ); %>
 </ul>
 </div>

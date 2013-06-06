@@ -47,7 +47,7 @@ $col.initPage();
 </div>
 
 <ul id="navBar" class="span-24 clear">
-<li><a href="<%= $com.homePageURI($col.siteName, $col.catalogAlias, 'home.np') %>"><%= $str.navbar.Home %></a></li>
+<li><a href="<%= $com.baseURI($col.siteName, $col.catalogAlias, 'home.np') %>"><%= $str.navbar.Home %></a></li>
 <li><a href="<%= $com.showAllURI($col.siteName, $col.catalogAlias, 'results.np', $res.sortField, true) %>"><%= $str.navbar.Browse %></a></li>
 <li><%= $str.navbar.Favorites %></li>
 </ul>

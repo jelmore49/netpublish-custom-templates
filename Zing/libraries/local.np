@@ -244,7 +244,7 @@ return results;
 };
 }
 
-/*
+/**
 * The indexOf() instance method iterates through an array and returns the index
 * of the first appearance of the supplied element (or -1 if not found). The
 * start parameter is the array index to start searching on; if start is
@@ -304,7 +304,7 @@ return -1;
 };
 }
 
-/*
+/**
 * The lastIndexOf() instance method iterates through an array and returns
 * the index of the last appearance of the supplied element (or -1 if
 * not found). The start parameter is the array index to start searching on;
@@ -364,7 +364,7 @@ return -1;
 };
 }
 
-/*
+/**
 * The trim() instance method strips any whitespace characters from the
 * beginning and end of the string it is called on.
 */
@@ -412,13 +412,24 @@ Local = { VERSION: 0.5 };
 * roles, to serve as a kind of namespacing.
 */
 Local.common = {
-// Functions for manipulating collections
+
+/*
+ * First, we define a series of methods that serve to build common URIs that
+ * are used internally within a NetPublish site. These methods create arrays
+ * and then concatenate the elements into a string using Array.join() because
+ * join() is faster than string concatenation.
+ */
+/**
+ * addToCollectionURI() builds a URI to add a selected record to a NetPublish
+ * collection.
+ */
 addToCollectionURI: function (siteName, catalogAlias, itemID, returnTemplate, collectionName) {
 var uriBuffer = ['/netpub/server.np?add',
 'itemid=' + itemID,
 'site=' + siteName,
 'catalog=' + catalogAlias,
 'template=' + returnTemplate];
+
 if (collectionName) {
 uriBuffer.push('name=' + collectionName);
 }
@@ -426,12 +437,17 @@ uriBuffer.push('name=' + collectionName);
 return uriBuffer.join('&amp;');
 },
 
+/**
+ * removeFromCollectionURI() builds a URI to remove a selected record from a
+ * NetPublish collection.
+ */
 removeFromCollectionURI: function (siteName, catalogAlias, itemID, returnTemplate, collectionName) {
 var uriBuffer = ['/netpub/server.np?remove',
 'itemid=' + itemID,
 'site=' + siteName,
 'catalog=' + catalogAlias,
 'template=' + returnTemplate];
+
 if (collectionName) {
 uriBuffer.push('name=' + collectionName);
 }
@@ -439,12 +455,17 @@ uriBuffer.push('name=' + collectionName);
 return uriBuffer.join('&amp;');
 },
 
+/**
+ * clearCollectionURI() builds a URI to clear the contents of a NetPublish
+ * collection.
+ */
 clearCollectionURI: function (siteName, catalogAlias, returnTemplate, collectionName) {
 var uriBuffer = ['/netpub/server.np?remove',
 'all',
 'site=' + siteName,
 'catalog=' + catalogAlias,
 'template=' + returnTemplate];
+
 if (collectionName) {
 uriBuffer.push('name=' + collectionName);
 }
@@ -452,6 +473,10 @@ uriBuffer.push('name=' + collectionName);
 return uriBuffer.join('&amp;');
 },
 
+/**
+ * downloadCollectionURI() builds a URI to download the contents of a NetPublish
+ * collection as a ZIP archive.
+ */
 downloadCollectionURI: function (siteName, catalogAlias, returnTemplate, collectionName, filename) {
 var uriBuffer = ['/netpub/server.np?archive',
 'site=' + siteName,
@@ -459,6 +484,7 @@ var uriBuffer = ['/netpub/server.np?archive',
 'template=' + returnTemplate,
 'filename=' + filename,
 'format=zip'];
+
 if (collectionName) {
 uriBuffer.push('name=' + collectionName);
 }
@@ -466,6 +492,10 @@ uriBuffer.push('name=' + collectionName);
 return uriBuffer.join('&amp;');
 },
 
+/**
+ * showCollectionURI() builds a URI to display the contents of a NetPublish
+ * collection.
+ */
 showCollectionURI: function (siteName, catalogAlias, returnTemplate, collectionName, sortField) {
 var uriBuffer = ['/netpub/server.np?show',
 'site=' + siteName,
@@ -479,7 +509,10 @@ uriBuffer.push('name=' + collectionName);
 return uriBuffer.join('&amp;');
 },
 
-// Use the "base" command if your template does not require access to the RecordSet object
+/**
+ * baseSearchURI() builds a URI to display a NetPublish search form using the
+ * "base" command, which does not create a RecordSet object.
+ */
 baseSearchURI: function (siteName, catalogAlias, returnTemplate) {
 return ['/netpub/server.np?base',
 'site=' + siteName,
@@ -487,14 +520,20 @@ return ['/netpub/server.np?base',
 'template=' + returnTemplate].join('&amp;');
 },
 
-// Convenience functions for certain common requests
-homePageURI: function (siteName, catalogAlias, returnTemplate) {
+/**
+ * baseURI() builds a URI to display a NetPublish page using the "base" command,
+ * which does not create a RecordSet object.
+ */
+baseURI: function (siteName, catalogAlias, returnTemplate) {
 return ['/netpub/server.np?base',
 'site=' + siteName,
 'catalog=' + catalogAlias,
 'template=' + returnTemplate].join('&amp;');
 },
 
+/**
+ * detailsURI() builds a URI to display a single-record detail page.
+ */
 detailsURI: function (siteName, catalogAlias, returnTemplate, itemID) {
 return ['/netpub/server.np?find',
 'site=' + siteName,
@@ -505,6 +544,10 @@ return ['/netpub/server.np?find',
 'value=' + itemID].join('&amp;');
 },
 
+/**
+ * showAllURI() builds a URI to display a results page for the entire catalog
+ * or gallery.
+ */
 showAllURI: function (siteName, catalogAlias, returnTemplate, sortField, browse) {
 var uriBuffer = ['/netpub/server.np?quickfind',
 'site=' + siteName,
@@ -518,20 +561,16 @@ uriBuffer.push('browse=true');
 return uriBuffer.join('&amp;');
 },
 
-searchByCategoryURI: function (siteName, catalogAlias, returnTemplate, categoryKeyword, sortField) {
-return ['/netpub/server.np?quickfind=' + categoryKeyword,
-'site=' + siteName,
-'catalog=' + catalogAlias,
-'template=' + returnTemplate,
-'sorton=' + sortField].join('&amp;');
-},
-
+/**
+ * quicksearchURI() builds a URI to display a results page for a single
+ * keyword search (as in the "Search by Category" sections of some sites).
+ * We alias
+ */
 quicksearchURI: function (siteName, catalogAlias, returnTemplate, searchTerm, sortField) {
-return ['/netpub/server.np?quickfind',
+return ['/netpub/server.np?quickfind=' + searchTerm,
 'site=' + siteName,
 'catalog=' + catalogAlias,
 'template=' + returnTemplate,
-'value=' + searchTerm,
 'sorton=' + sortField].join('&amp;');
 },
 

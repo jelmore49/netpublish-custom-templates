@@ -45,7 +45,7 @@ $det.initPage();
 </div>
 
 <ul id="navBar" class="span-24 clear">
-<li><a href="<%= $com.homePageURI($det.siteName, $det.catalogAlias, 'home.np') %>"><%= $str.navbar.Home %></a></li>
+<li><a href="<%= $com.baseURI($det.siteName, $det.catalogAlias, 'home.np') %>"><%= $str.navbar.Home %></a></li>
 <li><a href="<%= $com.showAllURI($det.siteName, $det.catalogAlias, 'results.np', $det.sortField, true) %>"><%= $str.navbar.Browse %></a></li>
 <li><a href="<%= $com.showCollectionURI($det.siteName, $det.catalogAlias, 'collection.np', '', $det.sortField) %>"><%= $str.navbar.Favorites %></a></li>
 </ul>
