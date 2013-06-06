@@ -5,56 +5,56 @@ library('dynamic_detail.np');
 var Local;
 
 Local.detail = {
-	siteName: Request.getParameter('site'),
-	catalogAlias: Request.getParameter('catalog'),
+siteName: Request.getParameter('site'),
+catalogAlias: Request.getParameter('catalog'),
 
-	initPage: function () {
-		// Setting these is required
-		RecordSet.itemNext();
-	},
+initPage: function () {
+// Setting these is required
+RecordSet.itemNext();
+},
 
-	checkForResize: function (baseHeight, baseWidth, maximumDim) {
-		var finalDims, resizeRatio = 1.0;
+checkForResize: function (baseHeight, baseWidth, maximumDim) {
+var finalDims, resizeRatio = 1.0;
 
-		function checkForNumber(value) {
-			if (typeof value !== 'number') {
-				return parseInt(value, 10);
-			} else {
-				if (isNaN(value)) {
-					return 0;
-				} else {
-					return value;
-				}
-			}
-		}
+function checkForNumber(value) {
+if (typeof value !== 'number') {
+return parseInt(value, 10);
+} else {
+if (isNaN(value)) {
+return 0;
+} else {
+return value;
+}
+}
+}
 
-		maximumDim = checkForNumber(maximumDim);
-		baseHeight = checkForNumber(baseHeight);
-		baseWidth = checkForNumber(baseWidth);
+maximumDim = checkForNumber(maximumDim);
+baseHeight = checkForNumber(baseHeight);
+baseWidth = checkForNumber(baseWidth);
 
-		// If no starting dimensions at all (whoops!) set some reasonable defaults
-		if (baseHeight === 0 && baseWidth === 0) {
-			baseHeight = 480;
-			baseWidth = 640;
-		}
+// If no starting dimensions at all (whoops!) set some reasonable defaults
+if (baseHeight === 0 && baseWidth === 0) {
+baseHeight = 480;
+baseWidth = 640;
+}
 
-		// If only one starting dimension is set, assume 4:3 ratio and set the other dimension accordingly
-		if (xor(baseHeight,baseWidth)) {
-			if (baseHeight) {
-				baseWidth = Math.floor(baseHeight * 1.33);
-			} else {
-				baseHeight = Math.floor(baseWidth * 0.75);
-			}
-		}
+// If only one starting dimension is set, assume 4:3 ratio and set the other dimension accordingly
+if (xor(baseHeight,baseWidth)) {
+if (baseHeight) {
+baseWidth = Math.floor(baseHeight * 1.33);
+} else {
+baseHeight = Math.floor(baseWidth * 0.75);
+}
+}
 
-		if (maximumDim > 0) {
-			resizeRatio = ((baseHeight < baseWidth) ? (maximumDim / baseWidth) : (maximumDim / baseHeight));
-		}
+if (maximumDim > 0) {
+resizeRatio = ((baseHeight < baseWidth) ? (maximumDim / baseWidth) : (maximumDim / baseHeight));
+}
 
-		finalDims = {
-			'finalHeight': Math.floor(baseHeight * resizeRatio),
-			'finalWidth': Math.floor(baseWidth * resizeRatio)
-		};
-		return finalDims;
-	}
+finalDims = {
+'finalHeight': Math.floor(baseHeight * resizeRatio),
+'finalWidth': Math.floor(baseWidth * resizeRatio)
+};
+return finalDims;
+}
 };

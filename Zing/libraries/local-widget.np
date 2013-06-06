@@ -3,177 +3,177 @@
 var Local;
 
 Local.widget = {
-	displaySortLinks: function (ascending) {
-		ascending = !!ascending; // Force it to be a Boolean
-		var sortHeader = '';
+displaySortLinks: function (ascending) {
+ascending = !!ascending; // Force it to be a Boolean
+var sortHeader = '';
 
-		if (RecordSet.totalItems === 0) {
-			sortHeader = '&nbsp;';
-		} else {
-			// Start building the sort element
-			sortHeader += Local.strings.ui.SortOrder + ': ';
-			if (ascending) {
-				sortHeader += Local.strings.ui.Ascending + ' &nbsp; | &nbsp; <a href="' + Request.getRequestURL().replace(/&/g, "&amp;") + '&amp;ascending=0">' + Local.strings.ui.Descending + '</a>';
-			} else if (Request.getParameter('ascending') === '0') {
-				sortHeader += '<a href="' + Request.getRequestURL().replace('ascending=0', 'ascending=1') + '">' + Local.strings.ui.Ascending + '</a> &nbsp; | &nbsp; ' + Local.strings.ui.Descending;
-			} else {
-				sortHeader += Local.strings.ui.Ascending + ' &nbsp; | &nbsp; <a href="' + Request.getRequestURL().replace('ascending=1', 'ascending=0').replace(/&/g, "&amp;") + '&amp;ascending=0">' + Local.strings.ui.Descending + '</a>';
-			}
-		}
-		return sortHeader;
-	},
+if (RecordSet.totalItems === 0) {
+sortHeader = '&nbsp;';
+} else {
+// Start building the sort element
+sortHeader += Local.strings.ui.SortOrder + ': ';
+if (ascending) {
+sortHeader += Local.strings.ui.Ascending + ' &nbsp; | &nbsp; <a href="' + Request.getRequestURL().replace(/&/g, "&amp;") + '&amp;ascending=0">' + Local.strings.ui.Descending + '</a>';
+} else if (Request.getParameter('ascending') === '0') {
+sortHeader += '<a href="' + Request.getRequestURL().replace('ascending=0', 'ascending=1') + '">' + Local.strings.ui.Ascending + '</a> &nbsp; | &nbsp; ' + Local.strings.ui.Descending;
+} else {
+sortHeader += Local.strings.ui.Ascending + ' &nbsp; | &nbsp; <a href="' + Request.getRequestURL().replace('ascending=1', 'ascending=0').replace(/&/g, "&amp;") + '&amp;ascending=0">' + Local.strings.ui.Descending + '</a>';
+}
+}
+return sortHeader;
+},
 
-	displayRecordsSummary: function (searchType) {
-		var	firstOffset = RecordSet.offset + 1,
-		lastOffset = firstOffset + Page.itemsPerPage - 1,
-		recordsHeader = '';
+displayRecordsSummary: function (searchType) {
+var	firstOffset = RecordSet.offset + 1,
+lastOffset = firstOffset + Page.itemsPerPage - 1,
+recordsHeader = '';
 
-		// Make sure last page of records only displays available records
-		if (lastOffset > RecordSet.totalItems) {
-			lastOffset = RecordSet.totalItems;
-		}
+// Make sure last page of records only displays available records
+if (lastOffset > RecordSet.totalItems) {
+lastOffset = RecordSet.totalItems;
+}
 
-		// Start building the records element
-		if (RecordSet.totalItems === 0) {
-			recordsHeader = Local.strings.error.NoMatches; // No records
-		} else {
-			switch (searchType) {
-				case 'browse':
-				recordsHeader = Local.strings.ui.DisplayingItems + " ";
-				break;
-				case 'collection':
-				recordsHeader = Local.strings.ui.CollectionContents + " ";
-				break;
-				case 'quicksearch':
-				recordsHeader = Local.strings.ui.QuickSearchResults + " ";
-				break;
-				default: // Default assumes regular search command
-				recordsHeader = Local.strings.ui.SearchResults + " ";
-			}
-			recordsHeader += (firstOffset + " - " + lastOffset + " of " + RecordSet.totalItems);
-		}
+// Start building the records element
+if (RecordSet.totalItems === 0) {
+recordsHeader = Local.strings.error.NoMatches; // No records
+} else {
+switch (searchType) {
+case 'browse':
+recordsHeader = Local.strings.ui.DisplayingItems + " ";
+break;
+case 'collection':
+recordsHeader = Local.strings.ui.CollectionContents + " ";
+break;
+case 'quicksearch':
+recordsHeader = Local.strings.ui.QuickSearchResults + " ";
+break;
+default: // Default assumes regular search command
+recordsHeader = Local.strings.ui.SearchResults + " ";
+}
+recordsHeader += (firstOffset + " - " + lastOffset + " of " + RecordSet.totalItems);
+}
 
-		return recordsHeader;
-	},
+return recordsHeader;
+},
 
-	displayPagesLinks: function () {
-		var pagesHeader = '';
+displayPagesLinks: function () {
+var pagesHeader = '';
 
-		if (!Page.isFirst()) {
-			pagesHeader += ('&lt; ' + Page.getPrevious(Local.strings.ui.PrevPage).replace(/&/g, "&amp;") + ' &nbsp; | &nbsp; '); // Link to previous page
-		}
-		if (Page.getTotal() > 1) {
-			pagesHeader +=  (Local.strings.ui.Page + " " + Page.getList().replace(/&/g, "&amp;")); // List of available pages
-		} else {
-			pagesHeader += '&nbsp;';
-		}
-		if (!Page.isLast()) {
-			pagesHeader += (' &nbsp; | &nbsp; ' + Page.getNext(Local.strings.ui.NextPage).replace(/&/g, "&amp;") + ' &gt;'); // Link to next page
-		}
+if (!Page.isFirst()) {
+pagesHeader += ('&lt; ' + Page.getPrevious(Local.strings.ui.PrevPage).replace(/&/g, "&amp;") + ' &nbsp; | &nbsp; '); // Link to previous page
+}
+if (Page.getTotal() > 1) {
+pagesHeader +=  (Local.strings.ui.Page + " " + Page.getList().replace(/&/g, "&amp;")); // List of available pages
+} else {
+pagesHeader += '&nbsp;';
+}
+if (!Page.isLast()) {
+pagesHeader += (' &nbsp; | &nbsp; ' + Page.getNext(Local.strings.ui.NextPage).replace(/&/g, "&amp;") + ' &gt;'); // Link to next page
+}
 
-		return pagesHeader;
-	},
+return pagesHeader;
+},
 
-	displayClearAllLink: function () {
-		var clearAllHeader = '';
+displayClearAllLink: function () {
+var clearAllHeader = '';
 
-		if (RecordSet.totalItems === 0) {
-			return clearAllHeader;
-		} else {
-			clearAllHeader = (
-				'&nbsp; | &nbsp;' + 
-				'<a href="' + Local.common.clearCollectionURI(Local.common.siteName, Local.common.catalogAlias, 'collection.np', '') + '">' +
-				Local.strings.ui.ClearAll + '</a>'
-			);
-		}
+if (RecordSet.totalItems === 0) {
+return clearAllHeader;
+} else {
+clearAllHeader = (
+'&nbsp; | &nbsp;' + 
+'<a href="' + Local.common.clearCollectionURI(Local.common.siteName, Local.common.catalogAlias, 'collection.np', '') + '">' +
+Local.strings.ui.ClearAll + '</a>'
+);
+}
 
-		return clearAllHeader;
-	},
+return clearAllHeader;
+},
 
-	displayDownloadLink: function () {
-		var downloadHeader = '';
+displayDownloadLink: function () {
+var downloadHeader = '';
 
-		// Start building the download element
-		if (RecordSet.totalItems === 0) {
-			return downloadHeader; // No records
-		} else {
-			downloadHeader = ('<a href="' + Local.common.downloadCollectionURI(Local.common.siteName, Local.common.catalogAlias, 'collection.np', '', 'Collection.zip') + '">' +
-			Local.strings.ui.DownloadCollection + '</a>');
-		}
+// Start building the download element
+if (RecordSet.totalItems === 0) {
+return downloadHeader; // No records
+} else {
+downloadHeader = ('<a href="' + Local.common.downloadCollectionURI(Local.common.siteName, Local.common.catalogAlias, 'collection.np', '', 'Collection.zip') + '">' +
+Local.strings.ui.DownloadCollection + '</a>');
+}
 
-		return downloadHeader;
-	},
+return downloadHeader;
+},
 
-	displayAddRemoveLink: function (site, catalog, recordID, destTemplate, collectionName, collectionItems) {
-		for (var i = 0; i < collectionItems.length; i += 1) {
-			if (collectionItems[i] === recordID) {
-				return '<a href="' + Local.common.removeFromCollectionURI(site, catalog, recordID, destTemplate, collectionName) +
-				'&amp;sorton=Filename">' +
-				'&ndash;&nbsp;Remove</a>';
-			}
-		}
-		return '<a href="' + Local.common.addToCollectionURI(site, catalog, recordID, destTemplate, collectionName) +
-		'&amp;sorton=Filename">' +
-		'+&nbsp;Save</a>';
-	},
+displayAddRemoveLink: function (site, catalog, recordID, destTemplate, collectionName, collectionItems) {
+for (var i = 0; i < collectionItems.length; i += 1) {
+if (collectionItems[i] === recordID) {
+return '<a href="' + Local.common.removeFromCollectionURI(site, catalog, recordID, destTemplate, collectionName) +
+'&amp;sorton=Filename">' +
+'&ndash;&nbsp;Remove</a>';
+}
+}
+return '<a href="' + Local.common.addToCollectionURI(site, catalog, recordID, destTemplate, collectionName) +
+'&amp;sorton=Filename">' +
+'+&nbsp;Save</a>';
+},
 
-	getSearchCriteria: function () {
-		var quickfind = false,
-		quickValue = '',
-		searchArgs = Request.getParameterAll(),
-		command = searchArgs[0], result, join, addJoin, field, op, value, existsOp,
-		x;
+getSearchCriteria: function () {
+var quickfind = false,
+quickValue = '',
+searchArgs = Request.getParameterAll(),
+command = searchArgs[0], result, join, addJoin, field, op, value, existsOp,
+x;
 
-		// See what type of search we started with
-		if (command === 'quickfind') {
-			quickfind = true;
-			quickValue = Request.getParameter(command);
-		}
+// See what type of search we started with
+if (command === 'quickfind') {
+quickfind = true;
+quickValue = Request.getParameter(command);
+}
 
-		result = Local.strings.ui.SearchCriteriaWas;
+result = Local.strings.ui.SearchCriteriaWas;
 
-		if (quickfind) {
-			quickValue = quickValue || Request.getParameter('value');
+if (quickfind) {
+quickValue = quickValue || Request.getParameter('value');
 
-			if (quickValue !== '') {
-				result += Local.strings.ui.QuickSearchContains + ' "' + quickValue + '"';
-			} else {
-				result += ' ' + Local.strings.ui.AllRecords;
-			}
-		} else {
-			join = Request.getParameter('defaultjoin');
-			addJoin = false;
+if (quickValue !== '') {
+result += Local.strings.ui.QuickSearchContains + ' "' + quickValue + '"';
+} else {
+result += ' ' + Local.strings.ui.AllRecords;
+}
+} else {
+join = Request.getParameter('defaultjoin');
+addJoin = false;
 
-			// Dump out all of our existing arguments as they were received
-			for (x = 1; x >= 1; x += 1) {
-				field = Request.getParameter((x === 1 ? 'field': 'field' + x));
-				if (!field) {
-					break;
-				}
+// Dump out all of our existing arguments as they were received
+for (x = 1; x >= 1; x += 1) {
+field = Request.getParameter((x === 1 ? 'field': 'field' + x));
+if (!field) {
+break;
+}
 
-				op = Request.getParameter((x === 1 ? 'op': 'op' + x)).toLowerCase();
-				value = Request.getParameter((x === 1 ? 'value': 'value' + x));
+op = Request.getParameter((x === 1 ? 'op': 'op' + x)).toLowerCase();
+value = Request.getParameter((x === 1 ? 'value': 'value' + x));
 
-				existsOp = (op === 'exists' || op === 'does not exist');
-				if (value !== '' || existsOp) {
-					if (addJoin) {
-						result += ' ' + join;
-					}
+existsOp = (op === 'exists' || op === 'does not exist');
+if (value !== '' || existsOp) {
+if (addJoin) {
+result += ' ' + join;
+}
 
-					result += ' ' + field + ' ' + op;
-					if (!existsOp) {
-						result += ' "' + value + '"';
-					}
-					addJoin = true;
-				}
-			}
+result += ' ' + field + ' ' + op;
+if (!existsOp) {
+result += ' "' + value + '"';
+}
+addJoin = true;
+}
+}
 
-			// No criteria matched the search
-			if (!addJoin) {
-				result = Local.strings.error.NoCriteriaEntered;
-			}
-		}
+// No criteria matched the search
+if (!addJoin) {
+result = Local.strings.error.NoCriteriaEntered;
+}
+}
 
-		return result;
-	}
+return result;
+}
 };

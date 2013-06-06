@@ -1,90 +1,90 @@
 ﻿var Local;
 
 Local.strings = {
-	SiteID: 'Zing'
+SiteID: 'Zing'
 };
 
 Local.strings.navbar = {
-	Home: 'Home',
-	Browse: 'Browse',
-	Search: 'Search',
-	Favorites: 'Favorites'
+Home: 'Home',
+Browse: 'Browse',
+Search: 'Search',
+Favorites: 'Favorites'
 };
 
 Local.strings.section = {
-	Home: 'Welcome',
-	Browse: 'Browse',
-	SearchResults: 'Results',
-	Favorites: 'Favorites',
-	Details: 'Details'
+Home: 'Welcome',
+Browse: 'Browse',
+SearchResults: 'Results',
+Favorites: 'Favorites',
+Details: 'Details'
 };
 
 Local.strings.error = {
-	NoMatches: 'The search returned no matches',
-	NoCriteriaEntered: 'No search criteria was entered',
-	EmptyFavorites: 'Your favorites folder is empty'
+NoMatches: 'The search returned no matches',
+NoCriteriaEntered: 'No search criteria was entered',
+EmptyFavorites: 'Your favorites folder is empty'
 };
 
 Local.strings.button = {
-	ViewOriginal: 'View',
-	AddToCollection: 'Save',
-	RemoveFromCollection: 'Remove',
-	DownloadOriginal: 'Download',
-	MoreInfo: 'More'
+ViewOriginal: 'View',
+AddToCollection: 'Save',
+RemoveFromCollection: 'Remove',
+DownloadOriginal: 'Download',
+MoreInfo: 'More'
 };
 
 Local.strings.ui = {
-	QuickSearchResults: 'Quick search results',
-	SearchResults: 'Displaying search results',
-	CollectionContents: 'Displaying favorites',
-	DisplayingItems: 'Displaying items',
-	DownloadCollection: 'Download Collection',
-	MoreInformation: 'More information on this item:',
-	SearchCriteriaWas: 'Search criteria was',
-	QuickSearchContains: 'quick search contains',
-	AllRecords: 'all records',
-	SortOrder: 'Sort order',
-	Page: 'Page',
-	ClearAll: 'clear all',
-	Ascending: 'ascending',
-	Descending: 'descending',
-	NextPage: 'next',
-	PrevPage: 'previous',
-	RecordsForWhich: 'Show records for which:',
-	QuickSearch: 'Quick search:',
-	SearchOn: 'Search on:',
-	ShowAllItems: 'show all items',
-	Any: 'Any',
-	All: 'All',
-	Search: 'Search'
+QuickSearchResults: 'Quick search results',
+SearchResults: 'Displaying search results',
+CollectionContents: 'Displaying favorites',
+DisplayingItems: 'Displaying items',
+DownloadCollection: 'Download Collection',
+MoreInformation: 'More information on this item:',
+SearchCriteriaWas: 'Search criteria was',
+QuickSearchContains: 'quick search contains',
+AllRecords: 'all records',
+SortOrder: 'Sort order',
+Page: 'Page',
+ClearAll: 'clear all',
+Ascending: 'ascending',
+Descending: 'descending',
+NextPage: 'next',
+PrevPage: 'previous',
+RecordsForWhich: 'Show records for which:',
+QuickSearch: 'Quick search:',
+SearchOn: 'Search on:',
+ShowAllItems: 'show all items',
+Any: 'Any',
+All: 'All',
+Search: 'Search'
 };
 
 Local.strings.search = {
-	Equals: 'equals',
-	Contains: 'contains',
-	BeginsWith: 'begins with',
-	Exists: 'exists',
-	NotExists: 'does not exist'
+Equals: 'equals',
+Contains: 'contains',
+BeginsWith: 'begins with',
+Exists: 'exists',
+NotExists: 'does not exist'
 };
 
 Local.strings.imagealt = {
-	Logo: 'NetPublish Logo',
-	CannotRender: 'Cannot render image',
-	MissingOriginal: 'Original Not Available',
-	MissingPreview: 'Preview Not Available',
-	Original: 'Original',
-	Preview: 'Preview',
-	Thumbnail: 'Thumbnail'
+Logo: 'NetPublish Logo',
+CannotRender: 'Cannot render image',
+MissingOriginal: 'Original Not Available',
+MissingPreview: 'Preview Not Available',
+Original: 'Original',
+Preview: 'Preview',
+Thumbnail: 'Thumbnail'
 };
 
 Local.strings.info = {
-	WelcomeText: 'Use the search tools to show only certain records'
+WelcomeText: 'Use the search tools to show only certain records'
 };
 
 Local.strings.video = {
-	LoadingVideo: 'Loading video player...',
-	VideoCodec: 'Movie - Video Codec',
-	FileExtension: 'Extension',
-	Height: 'Height',
-	Width: 'Width',
+LoadingVideo: 'Loading video player...',
+VideoCodec: 'Movie - Video Codec',
+FileExtension: 'Extension',
+Height: 'Height',
+Width: 'Width',
 };

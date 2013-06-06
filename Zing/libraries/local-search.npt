@@ -5,20 +5,20 @@ library('dynamic_results.np'); // Used for 'Sort Results By'
 var Local;
 
 Local.search = {
-	siteName: Request.getParameter('site'),
-	catalogAlias: Request.getParameter('searchCatalog'),
-	sortField: '[[= Results.sortFieldName ]]',
-	fieldList: CatalogSet.get(Request.getParameter('searchCatalog')).getTypeAll(),
-	masterKeywordList: CatalogSet.getMasterKeywordsAll(),
+siteName: Request.getParameter('site'),
+catalogAlias: Request.getParameter('searchCatalog'),
+sortField: '[[= Results.sortFieldName ]]',
+fieldList: CatalogSet.get(Request.getParameter('searchCatalog')).getTypeAll(),
+masterKeywordList: CatalogSet.getMasterKeywordsAll(),
 
-	initPage: function () {
-		if (Local.search.catalogAlias.length == 0) {
-			Local.search.catalogAlias = CatalogSet.getAliases()[0];
-		}
+initPage: function () {
+if (Local.search.catalogAlias.length == 0) {
+Local.search.catalogAlias = CatalogSet.getAliases()[0];
+}
 
-		// We only want the first 128 master keywords, to fit in the template
-		if (Local.search.masterKeywordList.length > 128) {
-			Local.search.masterKeywordList = Local.search.masterKeywordList.slice(0, 128); 
-		}
-	}
+// We only want the first 128 master keywords, to fit in the template
+if (Local.search.masterKeywordList.length > 128) {
+Local.search.masterKeywordList = Local.search.masterKeywordList.slice(0, 128); 
+}
+}
 }
