@@ -8,7 +8,7 @@ Local.results = {
 searchType: '',
 siteName: Request.getParameter('site'),
 catalogAlias: Request.getParameter('catalog'),
-sortField: '[[= Results.sortFieldName ]]',
+sortField: '[[= Results.sortFieldName ]]' || Request.getParameter('sorton') || 'Filename',
 
 /* Page-specific functions */
 buildRecords: function () {

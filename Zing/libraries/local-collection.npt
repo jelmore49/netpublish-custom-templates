@@ -7,7 +7,7 @@ var Local;
 Local.collection = {
 siteName: Request.getParameter('site'),
 catalogAlias: Request.getParameter('catalog'),
-sortField: '[[= Collection.sortFieldName ]]' || 'Filename',
+sortField: '[[= Collection.sortFieldName ]]' || Request.getParameter('sorton') || 'Filename',
 
 /* Page-specific functions */
 displayClearAllLink: function () {
