@@ -6,7 +6,7 @@ var Local;
 
 Local.results = {
 searchType: '',
-siteName: '[[= encodeURI(Global.folder) ]]',
+siteName: Request.getParameter('site'),
 catalogAlias: Request.getParameter('catalog'),
 sortField: '[[= Results.sortFieldName ]]',
 
