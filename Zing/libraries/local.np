@@ -580,9 +580,10 @@ return ['/netpub/server.np?quickfind=' + searchTerm,
 /**
  * isMissingOriginal() tests if the file is present by examining the URL
  * in RecordSet.record.original; if it ends with the name of the missing
- * original GIF, we return true. In NetPublish 10.0, isMissingOriginal() could
- * return incorrect results if the original file is replaced later, unless
- * NetPublish is restarted. This is fixed in NetPublish 10.1 and later.
+ * original GIF, we return true.
+ * In NetPublish 10.0, RecordSet.record.original could return incorrect results
+ * if the original file is replaced later, unless NetPublish is restarted.
+ * This is fixed in NetPublish 10.1 and later.
  */
 isMissingOriginal: function () {
 return (RecordSet.record.original.indexOf('missing_original.gif') !== -1);
