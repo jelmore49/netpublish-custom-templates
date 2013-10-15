@@ -1,20 +1,6 @@
 /* General Rules */
-@font-face
-{
-    font-family: MuseoSans-300;
-    src: url("http://fnt.webink.com/?drawer=586CF760-B32B-40AD-BE55-91029D27CDBF&font=A5D15588-A18E-DC95-62EC-9A4E98DE136A");
-    font-weight:normal; font-style:normal; font-variant:normal;
-}
-
-@font-face {
-	font-family: DroidSans;
-	font-style: normal;
-	font-weight: normal;
-	src: local('Droid Sans'), url('DroidSans.ttf'), url('http://themes.googleusercontent.com/font?kit=POVDFY-UUf0WFR9DIMCU8g') format('truetype');
-}
-
 h1, h2, #navBar li, .links, .detailLinks {
-	font-family: MuseoSans300, DroidSans, "Helvetica Neue", Verdana, Arial, sans-serif;
+	font-family: DroidSans, "Helvetica Neue", Verdana, Arial, sans-serif;
 }
 
 img {
