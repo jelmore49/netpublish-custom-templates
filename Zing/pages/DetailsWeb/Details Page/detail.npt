@@ -22,6 +22,7 @@ $det.initPage();
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Droid+Sans' />
 <link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/screen.css" media="screen, projection" />
 <!-- [if lt IE 8]>
 <link rel="stylesheet" href="[[= encodeURI(Global.siteRoot) ]]/resources/ie.css" media="screen, projection" />
