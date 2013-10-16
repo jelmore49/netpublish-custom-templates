@@ -4,18 +4,6 @@
 var Client = {
 	initPage: function () {
 	}
-},
-store = Lawnchair({name:'testing'}, function(store) {
-	// Create an object
-	var me = {key:'brian'};
-
-	// Save it
-	store.save(me);
-
-	// Access it later... Yes even after a page refresh!
-	store.get('brian', function(me) {
-		console.log(me);
-	});
-});
+};
 // Document ready? Let's go!
 window.onload = Client.initPage;
