@@ -97,7 +97,6 @@ $res.initPage();
 </div>
 <!-- Loading script files last -->
 <script type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/json2.js"></script>
-<script type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/lawnchair-0.6.1.js"></script>
 <script type="text/javascript" src="[[= encodeURI(Global.siteRoot) ]]/resources/client.js"></script>
 </body>
 </html>
