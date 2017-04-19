@@ -26,7 +26,7 @@ library('local.np'); // Imports some utility functions
 	RecordSet.itemNext();
 	var itemId = parseInt(RecordSet.record.itemID);
 %>	
-	<li id="id_<%= itemId %>"><a href="<%= htmlEncode(RecordSet.record.getDetailLink('detail.np')) %>">Item ID <%= itemId %></a></li>
+	<li id="id_<%= itemId %>"><a href="<%= htmlEncode(RecordSet.record.getDetailLink('detail.np')) %>">Item ID <%= itemId %></a> <li><a href="<%= htmlEncode(RecordSet.record.thumbnail) %>" id="thumbnailLink-<%= itemId %>">Thumbnail</a></li></li>
 <%
 } while (RecordSet.hasMore());
 %>
